@@ -10,8 +10,8 @@ app.use(cors())
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send("Spotify Project homepage")
-})
+    res.send("Spotify Project homepage");
+});
 
 app.get('/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date() });
