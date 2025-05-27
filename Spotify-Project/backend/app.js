@@ -10,8 +10,12 @@ app.use(cors())
 app.use(express.json());
 
 const profileRoute = require("./routes/profile")
+const likedSongsRoute = require('./routes/likedSongs');
+
 
 app.use("/profile", profileRoute);
+app.use('/api/liked-songs', likedSongsRoute);
+
 
 app.get('/', (req, res) => {
     res.send("Spotify Project homepage");
