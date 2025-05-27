@@ -1,13 +1,13 @@
 /* Profile page styling */
 
 .profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 2rem;
-  gap: 2rem;
-  text-align: left;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	padding: 2rem;
+	gap: 2rem;
+	text-align: left;
 }
 
 /* Header */
@@ -16,8 +16,8 @@
 	display: flex;
 	align-items: center;
 	gap: 2rem;
-	width: 100%; 
-  	max-width: 1280px; 
+	width: 100%;
+	max-width: 1280px;
 }
 
 .profile-picture {
@@ -44,7 +44,7 @@
 
 .edit-profile-btn {
 	background: none;
- 	border: none; 
+	border: none;
 	cursor: pointer;
 }
 
@@ -64,14 +64,27 @@
 /* Modal */
 .modal-overlay {
 	position: fixed;
-	top: 50%;
-	left: 50%;
-	bottom: 50%;
-	background-color: white;
+	top:0;
+	left: 280px;
+	bottom: 0;
+	right: 0;
+	width: calc(100vw - 280px);
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	z-index: 1000;
+}
+
+.modal-title {
+	margin-left: 1rem;
+	margin-bottom: 1rem;
+}
+
+.hoz-line {
+	border: 1px solid grey;
+	margin-bottom: 2rem;
 }
 
 .modal-content {
@@ -82,6 +95,8 @@
 	max-width: 500px;
 	font-style: normal;
 	font-variation-settings: "wdth" 100;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin-top: 12rem;
 }
 
 .form-group {
@@ -184,4 +199,3 @@ input:checked+.slider:before {
 .slider.round:before {
 	border-radius: 50%;
 }
-

@@ -55,11 +55,7 @@ function Profile() {
 				<div className='profile-overview'>
 					{/* <h3>Profile</h3> */}
 
-					{profile.display_name ? (
-						<h1>{profile.display_name}</h1>
-					) : (
-						<h1>Display Name</h1>
-					)}
+					<h1>{profile.display_name || "Display Name"}</h1>
 
 					<p>{profile.user_bio}</p>
 
@@ -70,16 +66,26 @@ function Profile() {
 						<button
 							className="edit-profile-btn"
 							onClick={() => setIsModalOpen(true)}>
-							<FaRegEdit/>
+							<FaRegEdit size={25} />
 						</button>
 					</div>
 				</div>
 			</header>
 			<div className='profile-body'>
-				<h2>Top Artists</h2>
-				<p>artists go here</p>
-				<h2>Top Songs</h2>
-				<SquareContainer />
+				{/* {profile.showTopArtists && ( */}
+					<section>
+						<h2>Top Artists</h2>
+						<p>artists go here</p>
+					</section>
+				{/* )} */}
+
+				{/* {profile.showTopSongs && ( */}
+					<section>
+						<h2>Top Songs</h2>
+						<SquareContainer />
+					</section>
+				{/* )} */}
+
 			</div>
 			{isModalOpen && (
 				<ProfileEditModal
