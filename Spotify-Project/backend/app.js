@@ -2,11 +2,10 @@ const express=require('express');
 const cors = require('cors');
 require('dotenv').config();
 const https = require("https");
-
+const fs = require('fs');
 
 const app=express();
-
-const port=3000;
+const port = 3000;
 
 app.use(cors())
 app.use(express.json());
@@ -28,8 +27,8 @@ app.get('/health', (req, res) => {
 });
 
 const options = {
-  key: fs.readFileSync("test-spotify-site.local-key.pem"),
-  cert: fs.readFileSync("test-spotify-site.local.pem"),
+  key: fs.readFileSync("./cert/test-spotify-site.local-key.pem"),
+  cert: fs.readFileSync("./cert/test-spotify-site.local.pem"),
 };
 
 https.createServer(options, app).listen(port, () => {
