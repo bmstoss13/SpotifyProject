@@ -1,6 +1,8 @@
 const express=require('express');
 const cors = require('cors');
 require('dotenv').config();
+const https = require("https");
+
 
 const app=express();
 
@@ -25,6 +27,13 @@ app.get('/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date() });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+const options = {
+  key: fs.readFileSync("test-spotify-site.local-key.pem"),
+  cert: fs.readFileSync("test-spotify-site.local.pem"),
+};
+
+https.createServer(options, app).listen(port, () => {
+  console.log(
+    `HTTPS Server is running on https://test-spotify-site.local:${port}`
+  );
 });

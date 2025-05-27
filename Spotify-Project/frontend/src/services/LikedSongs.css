@@ -1,0 +1,54 @@
+.liked-songs-content {
+    max-width: 900px;
+    margin-left: 280px; /* match sidebar width */
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
+    background-color: #fff;
+  }
+  
+  .songs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .song-card {
+    display: flex;
+    align-items: center;
+    background-color: #ffe6ee;
+    padding: 12px 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease;
+  }
+  
+  .song-card:hover {
+    background-color: #ffd4e3;
+  }
+  
+  .album-art {
+    width: 64px;
+    height: 64px;
+    border-radius: 4px;
+    margin-right: 15px;
+  }
+  
+  .song-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .song-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .song-artist,
+  .song-album,
+  .song-duration {
+    font-size: 0.85rem;
+    color: #666;
+  }
+  
