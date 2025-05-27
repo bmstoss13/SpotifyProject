@@ -1,4 +1,5 @@
 const express=require('express');
+const session = require('express-session')
 const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
@@ -11,6 +12,12 @@ const port=3000;
 app.use(cors())
 app.use(express.json());
 
+app.use(session({
+  secret: process.env.SPOTIFY_CLIENT_SECRET,
+  resave: false,
+  saveUninitialized: true,
+}));
+
 const profileRoute = require("./routes/profile")
 
 app.use("/profile", profileRoute);
@@ -21,6 +28,9 @@ app.get('/', (req, res) => {
 
 const discoverRoute = require("./routes/discover");
 app.get('/discover', discoverRoute);
+
+const authRoute = require("./routes/auth");
+app.use('/auth', authRoute);
 
 app.get('/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date() });
