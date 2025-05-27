@@ -33,6 +33,37 @@
     border-radius: 4px;
     margin-right: 15px;
   }
+  .song-table-container {
+    width: 1043px;
+    height: 489px;
+    background-color: #FAEAEF;
+    border-radius: 20px;
+    border: 1px solid #F6AAC4;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  
+  .table-header {
+    width: 1034px;
+    height: 41px;
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1.5fr 2fr 0.5fr;
+    background-color: #FAEAEF;
+    border-radius: 20px;
+    border: 2px solid #F6AAC4;
+    font-weight: 600;
+    color: #333;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .song-row {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1.5fr 2fr 0.5fr;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    color: #333;
+  }
   
   .song-info {
     display: flex;
