@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getProfile } from '../services/api'
+import Sidebar from '../components/Sidebar'
 
 function Profile() {
     const[profile, setProfile] = useState(null)
@@ -22,6 +23,7 @@ function Profile() {
 
     return(
         <div>
+			<Sidebar/>
             <h1>{profile.name}</h1>
             <p>{profile.bio}</p>
         </div>
