@@ -1,0 +1,165 @@
+.sidebar {
+  background: pink;
+  width: 280px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 2rem 0;
+  color: black;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+  padding: 0 1.5rem;
+}
+
+.sidebar-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  padding: 3px;
+}
+
+.sidebar-logo:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  padding: 0.5rem 1.5rem;
+}
+
+.sidebar-nav a {
+  color: black;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.sidebar-nav a:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: black;
+  transform: translateX(5px);
+}
+
+.sidebar-nav a.active {
+  background: rgba(0, 0, 0, 0.15);
+  color: black;
+}
+
+.sidebar-nav svg {
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+}
+
+/* Auth buttons styles */
+.auth-buttons {
+  margin-top: 20rem;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-buttons a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.login-button {
+  background-color: #4A6FFF;
+  color: white;
+  border: 2px solid #4A6FFF;
+}
+
+.login-button:hover {
+  background-color: #3A5FEF;
+  transform: translateY(-2px);
+}
+
+.signup-button {
+  color: white;
+  background-color: transparent;
+  border: 2px solid white;
+}
+
+.signup-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Add some spacing to the main content to account for the fixed sidebar */
+main {
+  margin-left: 280px;
+  padding: 2rem;
+}
+
+/* Welcome message styles */
+.welcome-message {
+  color: white;
+  text-align: center;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Update logout button to match other auth buttons */
+.logout-button {
+  background-color: #E53E3E;
+  color: white;
+  border: 2px solid #E53E3E;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.logout-button:hover {
+  background-color: #C53030;
+  transform: translateY(-2px);
+}
