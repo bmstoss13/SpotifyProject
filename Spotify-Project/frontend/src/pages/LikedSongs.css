@@ -1,10 +1,24 @@
+
 .liked-songs-content {
-    max-width: 900px;
-    margin-left: 280px; /* match sidebar width */
-    padding: 2rem;
+    max-width: 280px;
+    padding: 2rem 3rem;;
     font-family: 'Inter', sans-serif;
     background-color: #fff;
   }
+
+  .liked-songs-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
   
   .songs-list {
     display: flex;
@@ -64,7 +78,7 @@
     font-size: 0.95rem;
     color: #333;
   }
-  
+
   .song-info {
     display: flex;
     flex-direction: column;
@@ -81,5 +95,62 @@
   .song-duration {
     font-size: 0.85rem;
     color: #666;
+  }
+
+  .cover-icon {
+    width: 257px;
+    height: 253px;
+    background: #FAEAEF;
+    border: 3px solid #F6AAC4;
+    border-radius: 25px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .heart-container {
+    width: 124px;
+    height: 129px;
+    position: relative;
+  }
+  
+  .heart-outline {
+    width: 216.71px;
+    height: 105.59px;
+    position: absolute;
+    left: 8.65px;
+    top: 17.36px;
+    border: 4px solid #F6AAC4;
+    border-radius: 50%;
+    outline-offset: -2px;
+    background: transparent;
+  }
+
+  .heart-icon {
+    font-size: 80px; 
+    color: #F6AAC4;
+  }
+
+  .header-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;          
+  }
+
+  .playlist-label {
+    font-size: 1rem;
+    color: #444;
+    margin: 0;
+    padding-bottom: 0.3rem;
+    text-align: left;          
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 0.5rem;
+    text-align: left;          
   }
   

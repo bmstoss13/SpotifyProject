@@ -1,6 +1,8 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar';
 import './LikedSongs.css';
+import { FaHeart } from 'react-icons/fa';
+
 
 const mockSongs = [
   { title: "Blinding Lights", album: "After Hours", dateAdded: "April 21, 2025", duration: "4:46" },
@@ -18,9 +20,9 @@ export default function LikedSongs() {
       <Sidebar />
       <main className="liked-songs-main">
         <section className="liked-songs-header">
-          <div className="cover-icon">
-            <span className="heart-icon">♡</span>
-          </div>
+        <div className="cover-icon">
+            <FaHeart className="heart-icon" />
+            </div>
           <div className="header-text">
             <p className="playlist-label">Playlist</p>
             <h1 className="liked-songs-title">Liked Songs</h1>
