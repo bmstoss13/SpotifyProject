@@ -6,7 +6,7 @@ const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 	const [formData, setFormData] = useState(profileData);
 
 	useEffect(() => {
-		setFormData(formData);
+		setFormData(profileData);
 	}, [profileData]);
 
 	const handleChange = (e) => {
@@ -25,7 +25,8 @@ const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 	return (
 		<div className="modal-overlay">
 			<div className="modal-content">
-				<h2>Edit Profile</h2>
+				<h2 className="modal-title">Edit Profile</h2>
+				<hr className='hoz-line' />
 				<form onSubmit={handleSubmit}>
 					<div className="form-group">
 						<label>Display Name</label>
