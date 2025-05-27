@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react'
 import { getProfile } from '../services/api'
 import Sidebar from '../components/Sidebar'
 
+// features:
+	// user can edit profile
+	// user can choose to display artists/songs from their top/liked pages
+	// can make their profile private (hides from discover page)
+	//
+
 function Profile() {
     const[profile, setProfile] = useState(null)
     const[loading, isLoading] = useState(true)
