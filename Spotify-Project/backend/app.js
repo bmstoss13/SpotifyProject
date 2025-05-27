@@ -19,6 +19,9 @@ app.get('/', (req, res) => {
     res.send("Spotify Project homepage");
 });
 
+const discoverRoute = require("./routes/discover");
+app.get('/discover', discoverRoute);
+
 app.get('/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date() });
 });
