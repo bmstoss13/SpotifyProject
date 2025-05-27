@@ -9,6 +9,10 @@ const port=3000;
 app.use(cors())
 app.use(express.json());
 
+const profileRoute = require("./routes/profile")
+
+app.use("/profile", profileRoute);
+
 app.get('/', (req, res) => {
     res.send("Spotify Project homepage");
 });
