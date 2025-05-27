@@ -1,11 +1,24 @@
-export default function Song(){
-    return (
-        <div className="song">
-            <img src="https://via.placeholder.com/150" alt="Song Cover" />
-            <div className="song-info">
-                <h3>Song Title</h3>
-                <p>Artist Name</p>
-            </div>
+import React from "react";
+import "./Song.css";
+import { CgPlayButton } from "react-icons/cg";
+
+const Song = ({ title = "Song X sdfasdfasfdasdfasdfasfasfasdfasdfasfd", artist = "Artist Y" }) => {
+  return (
+    <div className="music-card">
+      <div className="music-icon">🎵</div>
+      <div className="song-info">
+        <div className="marquee-container">
+          <div className="marquee">{title}</div>
         </div>
-    );
-}
+        <div className="marquee-container">
+          <div className="marquee">{artist}</div>
+        </div>
+      </div>
+      <div className="play-icon">
+        <CgPlayButton size={125} />
+      </div>
+    </div>
+  );
+};
+
+export default Song;
