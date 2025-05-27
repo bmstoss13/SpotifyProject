@@ -1,23 +1,29 @@
 import React from "react";
 import Song from "./Song";
+import Artist from "./Artist";
 import "./SquareContainer.css";
 
 // Sample song data (replace or expand this as needed)
-const songs = Array.from({ length: 20 }).map((_, i) => ({
-  title: `Song ${i + 1}`,
-  artist: `Artist ${i + 1}`,
-}));
 
-const SquareContainer = () => {
+
+const SquareContainer = ({type, top}) => {
   return (
     <div className="grid-container">
-      {songs.map((song, index) => (
+      {type==="songs" && top.map((song, index) => (
         <Song
           key={index}
           title={song.title}
           artist={song.artist}
         />
       ))}
+      {type==="artists" && top.map((artist, index) => (
+        <Artist
+          key={index}
+          title={artist.artist}
+          pfp={artist.pfp}
+        />
+      ))}
+
     </div>
   );
 };

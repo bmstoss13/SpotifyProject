@@ -2,7 +2,7 @@ import React from "react";
 import "./Song.css";
 import { CgPlayButton } from "react-icons/cg";
 
-const Song = ({ title = "Song X sdfasdfasfdasdfasdfasfasfasdfasdfasfd", artist = "Artist Y" }) => {
+const Song = ({ title = "Song X sdfasdfasfdasdfasdfasfasfasdfasdfasfd", artist = "Artist Y", pfp}) => {
   return (
     <div className="music-card">
       <div className="music-icon">🎵</div>
