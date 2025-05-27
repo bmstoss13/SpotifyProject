@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import "./Profile.css";
 
 const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 
@@ -22,7 +23,7 @@ const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 	}
 
 	return (
-		<div className="profile-modal-overlay">
+		<div className="modal-overlay">
 			<div className="modal-content">
 				<h2>Edit Profile</h2>
 				<form onSubmit={handleSubmit}>
@@ -83,7 +84,7 @@ const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 					</div>
 					<div className="modal-actions">
 						<button className='save-btn' type="submit">Save</button>
-						<button className="cancel-btn" type="button" onClick={onClose}>Close</button>
+						<button className="close-btn" type="button" onClick={onClose}>Close</button>
 					</div>
 				</form>
 			</div>
