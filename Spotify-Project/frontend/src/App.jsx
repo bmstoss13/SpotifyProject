@@ -11,12 +11,15 @@ import { Routes, Route } from 'react-router-dom'
 import Profile from './pages/Profile'
 import Sidebar from './components/Sidebar'
 import Song from './components/Song'
+import LoginPage from './pages/LoginPage';
+
 function App() {
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar />
       <main style={{ flexGrow: 1, padding: '2rem', marginLeft: '280px' }}>
         <Routes>
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<Profile />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/inbox" element={<Inbox />} />
