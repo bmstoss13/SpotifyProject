@@ -10,7 +10,7 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Profile from './pages/Profile'
 import Sidebar from './components/Sidebar'
-
+import Song from './components/Song'
 function App() {
   return (
     <div style={{ display: 'flex' }}>

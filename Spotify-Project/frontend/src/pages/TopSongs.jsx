@@ -1,10 +1,11 @@
 import React from 'react';
-
+import Song from '../components/Song'; 
+import SquareContainer from '../components/SquareContainer';
 const TopSongs = () => {
   return (
     <div>
-      <h1>Top Songs Page</h1>
-      <p>Your most listened to songs.</p>
+     <SquareContainer />
+     {/* <Song /> */}
     </div>
   );
 };
