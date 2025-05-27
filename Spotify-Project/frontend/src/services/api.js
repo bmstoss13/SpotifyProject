@@ -1,5 +1,7 @@
 import axios from 'axios'
 
-const request = axios.create({ baseURL: 'http://localhost:3000/profile/' })
+const port = 3000;
+
+const request = axios.create({ baseURL: `https://test-spotify-site.local:${port}/profile/` })
 
 export const getProfile = () => request.get('/')
