@@ -14,6 +14,7 @@ router.get('/', async (req, res) => {
     const songs = response.data.items.map((item) => ({
       title: item.track.name,
       album: item.track.album.name,
+      albumArt: item.track.album.images[0]?.url || '',
       dateAdded: new Date(item.added_at).toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric'
       }),
