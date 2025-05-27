@@ -1,0 +1,69 @@
+.music-card {
+    width: 150px;
+    height: 150px;
+    background-color: #d9d9d9;
+    border-radius: 30px;
+    padding: 20px;
+    font-family: serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .music-icon {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 5px;
+  }
+  
+  .song-info {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  /* Visible container for scrolling text */
+  .marquee-container {
+    width: 70%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    height: 20px; /* fits small font sizes */
+  }
+  
+  /* Scrolling text inside the box */
+  .marquee {
+    display: inline-block;
+    white-space: nowrap;
+    animation: scroll-left 6s linear infinite;
+  }
+  
+  /* Apply to each repeated span of text */
+  .marquee span {
+    display: inline-block;
+    padding-right: 30px;
+    font-size: 14px;
+    color: black;
+  }
+  
+  /* Play button placement */
+  .play-icon {
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    color: #1a1b2b;
+    cursor: pointer;
+  }
+  
+  /* Keyframes for smooth looping scroll */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
