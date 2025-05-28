@@ -7,6 +7,7 @@ import SquareContainer from '../components/SquareContainer'
 import { FaRegEdit } from "react-icons/fa";
 import { useAuth } from '../components/AuthContext';
 import { useNavigate } from "react-router-dom";
+import { getSpotifyProfile } from '../services/spotify';
 
 // features:
 // user can edit profile
@@ -15,19 +16,23 @@ import { useNavigate } from "react-router-dom";
 
 function Profile() {
 
-    const [profile, setProfile] = useState(null);
-    const [loading, isLoading] = useState(true);
-    const { accessToken } = useAuth();
-    const navigate = useNavigate();
+	const [profile, setProfile] = useState(null);
+	const [loading, isLoading] = useState(true);
+	const [spotifyLoading, setSpotifyLoading] = useState(true);
+	const { accessToken } = useAuth();
+	const navigate = useNavigate();
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [topArtists, setTopArtists] = useState([]);
+	const [likedSongs, setLikedSongs] = useState([]);
+	const [timeRange, setTimeRange] = useState('medium_term'); // short_term, medium_term, long_term
 
-    useEffect(() => {
+	useEffect(() => {
         if (!accessToken) {
         navigate("/"); // redirect back to login if not authenticated (w access token)
         return;
     }
 
-    getProfile()
+	getProfile()
         .then((res) => {
             setProfile(res.data);
             isLoading(false);
@@ -38,24 +43,52 @@ function Profile() {
         });
     }, [accessToken]);
 
-	const handleProfileUpdate = (updatedData) => {
+	const loadSpotifyData = async () => {
+		setSpotifyLoading(true);
+		try {
+
+			const spotifyProfileData = await getSpotifyProfile(accessToken);
+			setSpotifyProfile(spotifyProfileData);
+
+			// const topSongsData = await getTopSongs(accessToken, timeRange, 20);
+			// setTopSongs(topTracksData.items);
+
+			const topArtistsData = await getTopArtists(accessToken, timeRange, 20);
+			setTopArtists(topArtistsData.items);
+
+			const likedSongsData = await getLikedSongs(accessToken, 50);
+			setLikedSongs(likedSongsData.items);
+
+		} catch (error) {
+			console.error('Error loading Spotify data:', error);
+		} finally {
+			setSpotifyLoading(false);
+		}
+	}
+
+	const handleProfileUpdate = async (updatedData) => {
 		// spotify api stuff goes here
+		// await stepIndicatorClasses(doc(db, "users", userId), updatedData, { merge: true });
 		setProfile(updatedData)
-		setIsModalOpen(false)	
+		setIsModalOpen(false)
 	};
 
-    if (loading) return <p>Loading...</p>;
-    if (!profile) return <p>Profile not found.</p>;
+	const handleTimeChange = (newTimeRange) => {
+		setTimeRange(newTimeRange);
+	};
 
-		return (
+	if (loading) return <p>Loading...</p>;
+	if (!profile) return <p>Profile not found.</p>;
+
+	return (
 		<div className='profile-container'>
 			<Sidebar />
 			<title>User Profile</title>
 			<header className='profile-header'>
-				{profile.image ? (
+				{(spotifyProfile?.images?.[0]?.url || profile.image) ? (
 					<img
 						className='profile-picture'
-						src={profile.image}
+						src={spotifyProfile?.images?.[0]?.url || profile.image}
 						alt='Profile picture'
 					/>
 				) : (
@@ -64,14 +97,13 @@ function Profile() {
 				<div className='profile-overview'>
 					{/* <h3>Profile</h3> */}
 
-					<h1>{profile.profileName || "Display Name"}</h1>
+					<h1>{profile.profileName || spotifyProfile?.display_name || "Display Name"}</h1>
 
 					<p>{profile.bio}</p>
 
 					{/* !! follower info goes here !! */}
 					<div className='follower-edit'>
-						<p>Followers: </p>
-						<p>Following: </p>
+						<p>Followers: {spotifyProfile?.followers?.total || 0}</p>
 						<button
 							className="edit-profile-btn"
 							onClick={() => setIsModalOpen(true)}>
