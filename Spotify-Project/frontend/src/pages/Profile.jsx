@@ -1,40 +1,142 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
+import { getProfile } from '../services/api'
+import Sidebar from '../components/Sidebar'
+import ProfileEditModal from '../components/ProfileEditModal'
+import { CiUser } from "react-icons/ci";
+import SquareContainer from '../components/SquareContainer'
+import { FaRegEdit } from "react-icons/fa";
+import { useAuth } from '../components/AuthContext';
 import { useNavigate } from "react-router-dom";
-import { getProfile } from "../services/api";
-import { useAuth } from "../components/AuthContext";
+import { getSpotifyProfile } from '../services/spotify';
+import '../components/Profile.css';
+import { getUserProfile, updateUserProfile, saveSpotifyData } from '../services/firebase-util';
+
+// features:
+// user can edit profile
+// user can choose to display artists/songs from their top songs and liked songs pages
+// can make their profile private (hides from discover page)
 
 function Profile() {
-    const [profile, setProfile] = useState(null);
-    const [loading, isLoading] = useState(true);
-    const { accessToken } = useAuth();
-    const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!accessToken) {
-        navigate("/"); // redirect back to login if not authenticated (w access token)
-        return;
-    }
+	const [profile, setProfile] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [spotifyProfile, setSpotifyProfile] = useState(true);
+	const [spotifyLoading, setSpotifyLoading] = useState(true);
+	const { accessToken } = useAuth();
+	const navigate = useNavigate();
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
-    getProfile()
-        .then((res) => {
-            setProfile(res.data);
-            isLoading(false);
-        })
-        .catch((e) => {
-            console.error("Error getting profile:", e);
-            isLoading(false);
-        });
-    }, [accessToken]);
+	useEffect(() => {
+		if (!accessToken) {
+			navigate("/"); // redirect back to login if not authenticated (w access token)
+			return;
+		}
 
-    if (loading) return <p>Loading...</p>;
-    if (!profile) return <p>Profile not found.</p>;
+		// getProfile()
+		//     .then((res) => {
+		//         setProfile(res.data);
+		//         isLoading(false);
+		//     })
+		//     .catch((e) => {
+		//         console.error("Error getting profile:", e);
+		//         isLoading(false);
+		//     });
+		// }, [accessToken]);
+		const loadData = async () => {
+			try {
+				// const profileRes = await getProfile();
+				// setProfile(profileRes.data);
+				// setLoading(false);
 
-  return (
-    <div>
-      <h1>{profile.name}</h1>
-      <p>{profile.bio}</p>
-    </div>
-  );
+				const spotifyProfileData = await getSpotifyProfile(accessToken);
+				setSpotifyProfile(spotifyProfileData);
+				setSpotifyLoading(false);
+
+				// firebase user data
+				const userProfile = await getUserProfile(spotifyProfileData);
+				setProfile(userProfile);
+				setLoading(false);
+
+			} catch (error) {
+				console.error("Error loading data:", error);
+				setLoading(false);
+				setSpotifyLoading(false);
+			}
+		}
+		loadData();
+	}, [accessToken, navigate]);
+
+	const handleProfileUpdate = async (updatedData) => {
+		try {
+			// update firebase user profile
+			const updatedProfile = await updateUserProfile(spotifyProfile, updatedData);
+			setProfile(updatedProfile);
+			setIsModalOpen(false)
+		} catch (error) {
+			console.error('Error updating profile:', error);
+		}
+	};
+
+	if (loading) return <p>Loading...</p>;
+	if (!profile) return <p>Profile not found.</p>;
+
+	return (
+		<div className='profile-container'>
+			<Sidebar />
+			<title>User Profile</title>
+			<header className='profile-header'>
+				{(spotifyProfile?.images?.[0]?.url || profile.image) ? (
+					<img
+						className='profile-picture'
+						src={spotifyProfile?.images?.[0]?.url || profile.image}
+						alt='Profile picture'
+					/>
+				) : (
+					<CiUser className='profile-picture fallback-icon' />
+				)}
+				<div className='profile-overview'>
+					{/* <h3>Profile</h3> */}
+
+					<h1>{profile.profileName || spotifyProfile?.display_name || "Display Name"}</h1>
+
+					<p>{profile.bio}</p>
+
+					{/* !! follower info goes here !! */}
+					<div className='follower-edit'>
+						<p>Followers: {spotifyProfile?.followers?.total || 0}</p>
+						<button
+							className="edit-profile-btn"
+							onClick={() => setIsModalOpen(true)}>
+							<FaRegEdit size={25} />
+						</button>
+					</div>
+				</div>
+			</header>
+			<div className='profile-body'>
+				{/* {profile.showTopArtists && ( */}
+				<section>
+					<h2>Top Artists</h2>
+					<p>artists go here</p>
+				</section>
+				{/* )} */}
+
+				{/* {profile.displayTopSongs && ( */}
+				<section>
+					<h2>Top Songs</h2>
+					<SquareContainer />
+				</section>
+				{/* )} */}
+
+			</div>
+			{isModalOpen && (
+				<ProfileEditModal
+					profileData={profile}
+					onClose={() => setIsModalOpen(false)}
+					onSubmit={handleProfileUpdate}
+				/>
+			)}
+		</div>
+	)
 }
 
 export default Profile;
