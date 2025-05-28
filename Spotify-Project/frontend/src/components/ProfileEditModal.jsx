@@ -32,8 +32,8 @@ const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 						<label>Display Name</label>
 						<input
 							type="text"
-							name="display_name"
-							value={formData.display_name}
+							name="profileName"
+							value={formData.profileName}
 							onChange={handleChange}
 							required
 						/>
@@ -42,8 +42,8 @@ const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 						<label>Bio</label>
 						<input
 							type="text"
-							name="user_bio"
-							value={formData.user_bio}
+							name="bio"
+							value={formData.bio}
 							onChange={handleChange}
 						/>
 					</div>
@@ -52,8 +52,8 @@ const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 						<label className="switch">
 							<input
 								type="checkbox"
-								name="is_public"
-								checked={formData.is_public}
+								name="isProfilePublic"
+								checked={formData.isProfilePublic}
 								onChange={handleChange}
 							/>
 							<span className="slider round"></span>
@@ -64,8 +64,8 @@ const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 						<label className="switch">
 							<input
 								type="checkbox"
-								name="show_top_artists"
-								checked={formData.show_top_artists}
+								name="showTopArtists"
+								checked={formData.showTopArtists}
 								onChange={handleChange}
 							/>
 							<span className="slider round"></span>
@@ -76,8 +76,8 @@ const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 						<label className="switch">
 							<input
 								type="checkbox"
-								name="show_top_songs"
-								checked={formData.show_top_songs}
+								name="displayTopSongs"
+								checked={formData.displayTopSongs}
 								onChange={handleChange}
 							/>
 							<span className="slider round"></span>

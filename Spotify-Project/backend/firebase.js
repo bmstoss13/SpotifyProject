@@ -9,4 +9,4 @@ const app = initializeApp(serviceAccount);
 const db = getFirestore(app);
 
 
-module.exports = db;
+module.exports = {db, app};
