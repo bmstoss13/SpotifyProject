@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { FaChartBar, FaMusic, FaUser, FaCompactDisc, FaEnvelope, FaComments, FaArrowLeft } from 'react-icons/fa';
 import { logout } from './AuthContext'
@@ -18,6 +18,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     logout();
+    navigate('/');
   }
 
   return (
@@ -69,7 +70,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/" className={handleLogout}>
+            <Link to="/" onClick={handleLogout}>
               <FaArrowLeft /> Logout
             </Link>
           </li>
