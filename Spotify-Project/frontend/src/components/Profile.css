@@ -1,0 +1,202 @@
+/* Profile page styling */
+
+.profile-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	padding: 2rem;
+	gap: 2rem;
+	text-align: left;
+}
+
+/* Header */
+
+.profile-header {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+	width: 100%;
+	max-width: 1280px;
+}
+
+.profile-picture {
+	width: 250px;
+	height: 250px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid black;
+}
+
+.fallback-icon {
+	width: 250px;
+	height: 250px;
+	color: black;
+	background-color: #FAEAEF;
+	border-radius: 50%;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.profile-overview {
+	display: flex;
+	flex-direction: column;
+}
+
+.edit-profile-btn {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.follower-edit {
+	display: flex;
+	flex-direction: row;
+	align-content: space-between;
+}
+
+/* Body/content */
+
+.profile-body {
+	width: 100%;
+	max-width: 1280px;
+}
+
+/* Modal */
+.modal-overlay {
+	position: fixed;
+	top:0;
+	left: 280px;
+	bottom: 0;
+	right: 0;
+	width: calc(100vw - 280px);
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	z-index: 1000;
+}
+
+.modal-title {
+	margin-left: 1rem;
+	margin-bottom: 1rem;
+}
+
+.hoz-line {
+	border: 1px solid grey;
+	margin-bottom: 2rem;
+}
+
+.modal-content {
+	background-color: #FAEAEF;
+	padding: 20px;
+	border-radius: 8px;
+	width: 100%;
+	max-width: 500px;
+	font-style: normal;
+	font-variation-settings: "wdth" 100;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin-top: 12rem;
+}
+
+.form-group {
+	margin-bottom: 1rem;
+	margin-left: 1rem;
+	margin-right: 1rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.form-group label {
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+	flex: 1;
+	width: 80%;
+	margin-left: 30px;
+	padding: 0.5rem;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+}
+
+.modal-actions {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+.save-btn {
+	border-radius: 20px;
+	background-color: white;
+}
+
+.close-btn {
+	border-radius: 20px;
+	background-color: white;
+}
+
+/* Sliders: from w3schools */
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked+.slider {
+	background-color: pink;
+}
+
+input:focus+.slider {
+	box-shadow: 0 0 1px pink;
+}
+
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
