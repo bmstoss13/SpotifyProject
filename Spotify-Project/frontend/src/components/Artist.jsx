@@ -1,13 +1,15 @@
 import React from "react";
-import "./Song.css";
+import "./Artist.css";
 import { CgPlayButton } from "react-icons/cg";
-const Artist = ({artist, pfp}) => {
+const Artist = ({ artist, pfp }) => {
   return (
     <div className="music-card">
-      <div className="music-icon">🎵</div>
+      <div className="music-icon">
+        <img src={pfp} alt={artist} className="artist-image" />
+      </div>
       <div className="song-info">
         <div className="marquee-container">
-          <div className="marquee">{"Drake"}</div>
+          <div className="marquee">{artist}</div>
         </div>
       </div>
       <div className="play-icon">
