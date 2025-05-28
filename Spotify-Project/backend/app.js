@@ -4,8 +4,6 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 require('dotenv').config();
-const https = require("https");
-const fs = require('fs');
 
 const app=express();
 const port = 3000;
