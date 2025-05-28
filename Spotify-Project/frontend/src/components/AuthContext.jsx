@@ -6,6 +6,8 @@ export function AuthProvider({ children }) {
     const [accessToken, setAccessToken] = useState(localStorage.getItem("access_token"));
     const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refresh_token"));
     const [expiresIn, setExpiresIn] = useState(localStorage.getItem("expires_in"));
+	// max adds:
+	const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const hashParams = new URLSearchParams(window.location.hash.slice(1));
@@ -25,7 +27,9 @@ export function AuthProvider({ children }) {
 
     // Redirect after login
     //   window.location.replace("/profile");
+		window.history.replaceState({}, document.title, "/profile");
     }
+	setLoading(false);
     }, []);
 
   return (
