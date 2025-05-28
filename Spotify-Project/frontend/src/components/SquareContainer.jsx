@@ -1,6 +1,7 @@
 import React from "react";
 import Song from "./Song";
 import Artist from "./Artist";
+import User from "./User";
 import "./SquareContainer.css";
 
 // Sample song data (replace or expand this as needed)
@@ -21,6 +22,13 @@ const SquareContainer = ({type, top}) => {
           key={index}
           title={artist.artist}
           pfp={artist.pfp}
+        />
+      ))}
+      {type==="user" && top.map((user, index) => (
+        <User
+          key={index}
+          profileName={user.profileName}
+          pfp={user.pfp || "https://via.placeholder.com/100"}
         />
       ))}
 
