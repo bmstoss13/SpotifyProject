@@ -1,0 +1,10 @@
+.top-header {
+  text-align: left; /* optional */
+  font-weight: 600; /* optional */
+}
+
+.left-aligned-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* aligns all child elements to the left */
+}
