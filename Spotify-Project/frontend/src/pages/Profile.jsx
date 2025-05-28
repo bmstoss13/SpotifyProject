@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getProfile } from '../services/api'
+<<<<<<< HEAD
 import Sidebar from '../components/Sidebar'
 import ProfileEditModal from '../components/ProfileEditModal'
 import { CiUser } from "react-icons/ci";
@@ -10,6 +11,9 @@ import { FaRegEdit } from "react-icons/fa";
 // user can edit profile
 // user can choose to display artists/songs from their top songs and liked songs pages
 // can make their profile private (hides from discover page)
+=======
+import { useAuth } from '../components/AuthContext';
+>>>>>>> ccb3a02eacc7b58442907e21d7383f502c4bc616
 
 function Profile() {
 
@@ -17,6 +21,7 @@ function Profile() {
 	const [loading, isLoading] = useState(true)
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
+<<<<<<< HEAD
 	useEffect(() => {
 		getProfile()
 			.then((res) => {
@@ -96,5 +101,41 @@ function Profile() {
 			)}
 		</div>
 	)
+=======
+    const { accessToken, setAccessToken, setRefreshToken, setExpiresIn } = useAuth();
+    useEffect(() => {
+        const hashParams = new URLSearchParams(window.location.hash.slice(1)); 
+        console.log(hashParams);
+        const auth = hashParams.get("access_token");
+        const refresh = hashParams.get("refresh_token");
+        const expires = hashParams.get("expires_in");
+        console.log("auth:" + auth);
+        if (auth) {
+            setAccessToken(auth);
+            setRefreshToken(refresh);
+            setExpiresIn(expires);
+          
+            // window.location.replace("/profile");
+        }
+
+        else{
+            window.location.replace("/");
+        }
+    
+            // Clean up the paramerers from the URL
+        // window.history.replaceState({}, document.title, window.location.pathname);
+    }, []);
+
+    if (loading) return <p>Loading...</p>
+    if (!profile) return <p>Profile not found.</p>
+
+    return(
+        <div>
+            <h1>{profile.name}</h1>
+            <p>{profile.bio}</p>
+            {/* <p>{accessToken}</p> */}
+        </div>
+    )
+>>>>>>> ccb3a02eacc7b58442907e21d7383f502c4bc616
 };
 export default Profile;
