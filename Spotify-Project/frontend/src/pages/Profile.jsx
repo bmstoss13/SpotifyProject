@@ -8,6 +8,8 @@ import { FaRegEdit } from "react-icons/fa";
 import { useAuth } from '../components/AuthContext';
 import { useNavigate } from "react-router-dom";
 import { getSpotifyProfile } from '../services/spotify';
+import '../components/Profile.css';
+import { getUserProfile, updateUserProfile, saveSpotifyData } from '../services/firebase-util';
 
 // features:
 // user can edit profile
@@ -17,48 +19,62 @@ import { getSpotifyProfile } from '../services/spotify';
 function Profile() {
 
 	const [profile, setProfile] = useState(null);
-	const [loading, isLoading] = useState(true);
+	const [loading, setLoading] = useState(true);
+	const [spotifyProfile, setSpotifyProfile] = useState(true);
 	const [spotifyLoading, setSpotifyLoading] = useState(true);
 	const { accessToken } = useAuth();
 	const navigate = useNavigate();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-        if (!accessToken) {
-        navigate("/"); // redirect back to login if not authenticated (w access token)
-        return;
-    }
-
-	getProfile()
-        .then((res) => {
-            setProfile(res.data);
-            isLoading(false);
-        })
-        .catch((e) => {
-            console.error("Error getting profile:", e);
-            isLoading(false);
-        });
-    }, [accessToken]);
-
-	const loadSpotifyData = async () => {
-		setSpotifyLoading(true);
-		try {
-
-			const spotifyProfile = await getSpotifyProfile(accessToken);
-			setSpotifyProfile(spotifyProfileData);
-
-		} catch (error) {
-			console.error('Error loading Spotify data:', error);
-		} finally {
-			setSpotifyLoading(false);
+		if (!accessToken) {
+			navigate("/"); // redirect back to login if not authenticated (w access token)
+			return;
 		}
-	}
+
+		// getProfile()
+		//     .then((res) => {
+		//         setProfile(res.data);
+		//         isLoading(false);
+		//     })
+		//     .catch((e) => {
+		//         console.error("Error getting profile:", e);
+		//         isLoading(false);
+		//     });
+		// }, [accessToken]);
+		const loadData = async () => {
+			try {
+				// const profileRes = await getProfile();
+				// setProfile(profileRes.data);
+				// setLoading(false);
+
+				const spotifyProfileData = await getSpotifyProfile(accessToken);
+				setSpotifyProfile(spotifyProfileData);
+				setSpotifyLoading(false);
+
+				// firebase user data
+				const userProfile = await getUserProfile(spotifyProfileData);
+				setProfile(userProfile);
+				setLoading(false);
+
+			} catch (error) {
+				console.error("Error loading data:", error);
+				setLoading(false);
+				setSpotifyLoading(false);
+			}
+		}
+		loadData();
+	}, [accessToken, navigate]);
 
 	const handleProfileUpdate = async (updatedData) => {
-		// spotify api stuff goes here
-		// await stepIndicatorClasses(doc(db, "users", userId), updatedData, { merge: true });
-		setProfile(updatedData)
-		setIsModalOpen(false)
+		try {
+			// update firebase user profile
+			const updatedProfile = await updateUserProfile(spotifyProfile, updatedData);
+			setProfile(updatedProfile);
+			setIsModalOpen(false)
+		} catch (error) {
+			console.error('Error updating profile:', error);
+		}
 	};
 
 	if (loading) return <p>Loading...</p>;
