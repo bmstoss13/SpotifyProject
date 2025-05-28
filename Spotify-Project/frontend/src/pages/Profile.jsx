@@ -55,9 +55,9 @@ function Profile() {
 				<div className='profile-overview'>
 					{/* <h3>Profile</h3> */}
 
-					<h1>{profile.display_name || "Display Name"}</h1>
+					<h1>{profile.profileName || "Display Name"}</h1>
 
-					<p>{profile.user_bio}</p>
+					<p>{profile.bio}</p>
 
 					{/* !! follower info goes here !! */}
 					<div className='follower-edit'>
@@ -79,7 +79,7 @@ function Profile() {
 					</section>
 				{/* )} */}
 
-				{/* {profile.showTopSongs && ( */}
+				{/* {profile.displayTopSongs && ( */}
 					<section>
 						<h2>Top Songs</h2>
 						<SquareContainer />
