@@ -22,9 +22,6 @@ function Profile() {
 	const { accessToken } = useAuth();
 	const navigate = useNavigate();
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [topArtists, setTopArtists] = useState([]);
-	const [likedSongs, setLikedSongs] = useState([]);
-	const [timeRange, setTimeRange] = useState('medium_term'); // short_term, medium_term, long_term
 
 	useEffect(() => {
         if (!accessToken) {
@@ -47,17 +44,8 @@ function Profile() {
 		setSpotifyLoading(true);
 		try {
 
-			const spotifyProfileData = await getSpotifyProfile(accessToken);
+			const spotifyProfile = await getSpotifyProfile(accessToken);
 			setSpotifyProfile(spotifyProfileData);
-
-			// const topSongsData = await getTopSongs(accessToken, timeRange, 20);
-			// setTopSongs(topTracksData.items);
-
-			const topArtistsData = await getTopArtists(accessToken, timeRange, 20);
-			setTopArtists(topArtistsData.items);
-
-			const likedSongsData = await getLikedSongs(accessToken, 50);
-			setLikedSongs(likedSongsData.items);
 
 		} catch (error) {
 			console.error('Error loading Spotify data:', error);
@@ -71,10 +59,6 @@ function Profile() {
 		// await stepIndicatorClasses(doc(db, "users", userId), updatedData, { merge: true });
 		setProfile(updatedData)
 		setIsModalOpen(false)
-	};
-
-	const handleTimeChange = (newTimeRange) => {
-		setTimeRange(newTimeRange);
 	};
 
 	if (loading) return <p>Loading...</p>;
