@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { FaChartBar, FaMusic, FaUser, FaCompactDisc, FaEnvelope, FaComments } from 'react-icons/fa';
+import { FaChartBar, FaMusic, FaUser, FaCompactDisc, FaEnvelope, FaComments, FaArrowLeft } from 'react-icons/fa';
+import { logout } from './AuthContext'
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -14,6 +15,10 @@ const Sidebar = () => {
   const toggleStatistics = () => {
     setIsStatisticsOpen(!isStatisticsOpen);
   };
+
+  const handleLogout = () => {
+    logout();
+  }
 
   return (
     <div className="sidebar">
@@ -61,6 +66,11 @@ const Sidebar = () => {
           <li>
             <Link to="/forums" className={isActive('/forums') ? 'active' : ''}>
               <FaComments /> Forums
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className={handleLogout}>
+              <FaArrowLeft /> Logout
             </Link>
           </li>
         </ul>
