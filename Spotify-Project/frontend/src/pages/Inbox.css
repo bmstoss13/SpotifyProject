@@ -1,0 +1,226 @@
+/* General container for the entire inbox page */
+.inbox-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Sidebar styles */
+.inbox-sidebar {
+  width: 300px;
+  border-right: 1px solid #ccc;
+  padding: 0 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  height: 100%;
+  position: fixed;
+  left: 280px;
+  top: 0;
+}
+
+.inbox-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 10px 0;
+}
+
+.inbox-sidebar-header h1 {
+  font-size: 30px;
+  margin: 0;
+  padding: 20px 0 0 0;
+}
+
+.inbox-sidebar-edit-icon-container {
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 8px; /* Changed from 50% to 8px for rounded rectangle */
+  padding: 8px 12px; /* Adjusted padding for better icon centering */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inbox-sidebar-edit-icon-container .MuiSvgIcon-root {
+  color: black;
+  font-size: 20px; /* Added explicit size for better centering */
+}
+
+.inbox-sidebar hr {
+  width: 100%;
+  margin: 10px 0;
+  border-color: #ddd;
+}
+
+.inbox-sidebar-search {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Styles for the scrollable thread list container */
+.inbox-thread-list-container {
+  flex-grow: 1; /* Allow it to take available space */
+  overflow-y: auto; /* Add scrollbar if content overflows */
+  min-height: 0; /* Important for flex-grow in a flex column */
+}
+
+/* Individual thread item in the sidebar */
+.inbox-thread-item {
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background-color: white; /* Default background */
+}
+
+.inbox-thread-item.selected {
+  background-color: #e0e0e0; /* Background for selected thread */
+}
+
+.inbox-thread-item:hover {
+  background-color: #f0f0f0; /* Hover effect */
+}
+
+.inbox-thread-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inbox-thread-name {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.inbox-thread-time {
+  font-size: 0.8em;
+  color: grey;
+}
+
+.inbox-thread-last-message {
+  margin: 5px 0 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* Message display area styles */
+.message-display-area {
+  position: fixed;
+  left: 620px; /* Increased from 580px to 600px to prevent overlap */
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.message-display-header {
+  margin-bottom: 10px;
+}
+
+.message-display-header h2 {
+  margin: 0;
+}
+
+.message-display-status {
+  margin: 0 0 10px;
+  color: grey;
+  font-size: 0.9em;
+}
+
+.message-display-area hr {
+  width: 100%;
+  margin: 0 0 10px;
+  border-color: #eee;
+}
+
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-bubble {
+  margin: 10px 0;
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 70%;
+  min-width: 60px;
+  word-wrap: break-word;
+  border: 1px solid #eee;
+  align-self: flex-start;
+  position: relative;
+}
+
+.message-bubble.sent {
+  background-color: #DCF8C6;
+  align-self: flex-end;
+  border-radius: 15px 15px 0 15px;
+}
+
+.message-bubble.received {
+  background-color: #fff;
+  align-self: flex-start;
+  border-radius: 15px 15px 15px 0;
+  border: 1px solid #ddd;
+}
+
+/* Group messages from the same sender */
+.message-bubble.same-sender {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.message-bubble.sent.same-sender {
+  border-radius: 15px 15px 0 15px;
+}
+
+.message-bubble.received.same-sender {
+  border-radius: 15px 15px 15px 0;
+}
+
+/* Add more space between different senders */
+.message-bubble:not(.same-sender) {
+  margin-top: 16px;
+}
+
+.message-timestamp {
+  font-size: 0.7em;
+  color: #999;
+  margin-top: 4px;
+  text-align: right;
+  display: block;
+}
+
+.message-input-area {
+  display: flex;
+  margin-top: 10px; /* Added margin for separation */
+}
+
+.message-input-area input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid grey;
+  margin-right: 10px;
+}
+
+/* Placeholder for when no thread is selected */
+.no-thread-selected {
+  text-align: center;
+  color: grey;
+  margin-top: 50px;
+} 
