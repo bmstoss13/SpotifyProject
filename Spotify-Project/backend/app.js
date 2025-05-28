@@ -28,7 +28,8 @@ app.get('/', (req, res) => {
 
 const discoverRoute = require("./routes/discover");
 app.get('/discover', discoverRoute);
-
+const topRoute = require('./routes/top');
+app.use('/top', topRoute);
 
 const authRoute = require("./routes/auth");
 app.use('/auth', authRoute);

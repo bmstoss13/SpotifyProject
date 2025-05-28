@@ -11,10 +11,17 @@
     justify-content: space-between;
   }
   
+  .artist-image {
+    width: 100px;           /* adjust as needed */
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;  /* optional styling */
+  }
   .music-icon {
-    font-size: 40px;
-    text-align: center;
-    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .song-info {
