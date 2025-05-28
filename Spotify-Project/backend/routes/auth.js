@@ -79,7 +79,7 @@ router.get('/callback', async (req, res) => {
         console.log('Received refresh_token:', refresh_token);
         console.log('Expires In (seconds):', expires_in);
 
-        return res.redirect(`${FRONTEND_URI}/#` + querystring.stringify({
+        return res.redirect(`${FRONTEND_URI}/profile#` + querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
         }));

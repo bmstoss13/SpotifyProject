@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { initiateSpotifyLogin } from '../services/api';
+import { useAuth } from '../components/AuthContext';
 
 
 function LoginPage() {
     const handleLogin = () => {
         initiateSpotifyLogin(); 
     };
+
+    // const { setAccessToken, setRefreshToken, setExpiresIn } = useAuth();
+
+    
+
+
 
     return (
         <div>
