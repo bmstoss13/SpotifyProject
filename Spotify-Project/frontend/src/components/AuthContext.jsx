@@ -1,38 +1,40 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const [accessToken, setAccessToken] = useState(null);
-    const [refreshToken, setRefreshToken] = useState(null);
-    const [expiresIn, setExpiresIn] = useState(null);
+    const [accessToken, setAccessToken] = useState(localStorage.getItem("access_token"));
+    const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refresh_token"));
+    const [expiresIn, setExpiresIn] = useState(localStorage.getItem("expires_in"));
 
-//     useEffect(() => {
-//         const hashParams = new URLSearchParams(window.location.search); 
+    useEffect(() => {
+        const hashParams = new URLSearchParams(window.location.hash.slice(1));
+        console.log(hashParams);
+        const auth = hashParams.get("access_token");
+        const refresh = hashParams.get("refresh_token");
+        const expires = hashParams.get("expires_in");
 
-//         const auth = hashParams.get("access_token");
-//         const refresh = hashParams.get("refresh_token");
-//         const expires = hashParams.get("expires_in");
+    if (auth) {
+        localStorage.setItem("access_token", auth);
+        localStorage.setItem("refresh_token", refresh);
+        localStorage.setItem("expires_in", expires);
 
-//         if (auth) {
-//         setAccessToken(auth);
-//         setRefreshToken(refresh);
-//         setExpiresIn(expires);
-      
-//         window.location.replace("/profile");
-//         }
+        setAccessToken(auth);
+        setRefreshToken(refresh);
+        setExpiresIn(expires);
 
-//         // Clean up the paramerers from the URL
-//         window.history.replaceState({}, document.title, window.location.pathname);
-//     }, []);
+    // Redirect after login
+    //   window.location.replace("/profile");
+    }
+    }, []);
 
-    return (
-      <AuthContext.Provider value={{ accessToken, setAccessToken, setRefreshToken, setExpiresIn }}>
-        {children}
-      </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={{ accessToken, refreshToken, expiresIn, setAccessToken, setRefreshToken, setExpiresIn }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 }
