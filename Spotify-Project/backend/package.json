@@ -106,7 +106,8 @@
     "yargs-parser": "^21.1.1"
   },
   "scripts": {
-    "start": "nodemon app.js",
+    "dev": "nodemon app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
