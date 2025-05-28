@@ -23,9 +23,11 @@ export function AuthProvider({ children }) {
       localStorage.setItem("refresh_token", refresh);
       localStorage.setItem("expires_in", expires);
 
+
       setAccessToken(auth);
       setRefreshToken(refresh);
       setExpiresIn(expires);
+
 
       // ⚠️ Clean URL
       window.history.replaceState(null, '', window.location.pathname);
@@ -35,11 +37,26 @@ export function AuthProvider({ children }) {
     }
   }, [navigate]);
 
+    useEffect(() => {
+        if (accessToken && refreshToken && expiresIn) {
+            localStorage.setItem("access_token", accessToken);
+            localStorage.setItem("refresh_token", refreshToken);
+            localStorage.setItem("expires_in", expiresIn);
+        }
+    }, [accessToken, refreshToken, expiresIn]);
+
+
   return (
     <AuthContext.Provider value={{ accessToken, refreshToken, expiresIn }}>
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function logout() {
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('refresh_token');
+  localStorage.removeItem('expires_in');
 }
 
 export function useAuth() {
