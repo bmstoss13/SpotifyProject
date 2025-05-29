@@ -17,6 +17,9 @@ Using React, Express, and Firebase, create a web application using the Spotify A
 
 ## Installation
 
+### .env
+* Place the .env file in the project's root directory, `Spotify-Project`.
+
 ### Frontend
 * First place your two spotify certificates in the frontend root folder:
     * test-spotify-site.local-key.pem
