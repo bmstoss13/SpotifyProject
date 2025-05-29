@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import ProfileEditModal from '../components/ProfileEditModal';
 import { CiUser } from "react-icons/ci";
-import SquareContainer from '../components/SquareContainer'; // Import SquareContainer
+import SquareContainer from '../components/SquareContainer'; 
 import { FaRegEdit } from "react-icons/fa";
 import { useAuth } from '../components/AuthContext';
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,7 +17,7 @@ function OtherUserProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { userId } = useParams();
 
-    // Console logs for debugging (keep these for now, remove later if desired)
+
     console.log("Current profile state in render:", profile);
     console.log("Current loading state in render:", loading);
 
@@ -34,7 +34,7 @@ function OtherUserProfile() {
                 setLoading(true);
 
                 const response = await viewOtherProfs(userId);
-                const fetchedProfileData = response.data; // Extract the actual data from Axios response
+                const fetchedProfileData = response.data; 
 
                 console.log("Fetched data from backend (inside try):", fetchedProfileData);
 
@@ -100,7 +100,7 @@ function OtherUserProfile() {
                 </div>
             </header>
             <div className='profile-body'>
-                {/* Display Top Artists using SquareContainer */}
+
                 {profile.showTopArtists && (
                     <section>
                         <h2>Top Artists</h2>
@@ -112,7 +112,6 @@ function OtherUserProfile() {
                     </section>
                 )}
 
-                {/* Display Top Songs using SquareContainer */}
                 {profile.displayTopSongs && (
                     <section>
                         <h2>Top Songs</h2>
