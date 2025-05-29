@@ -35,8 +35,8 @@ app.use('/api/liked-songs', likedSongsRoute);
 // });
 
 const discoverRoute = require("./routes/discover");
+app.use('/discover', discoverRoute);
 
-app.get('/discover', discoverRoute);
 const topRoute = require('./routes/top');
 app.use('/top', topRoute);
 
