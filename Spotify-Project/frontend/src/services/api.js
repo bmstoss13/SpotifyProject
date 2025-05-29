@@ -32,3 +32,28 @@ export const searchUsers = (query) => {
 export const getUserProfile = (userId) => {
 	return request.get(`/users/${userId}`);
 };
+
+// --- Forum API Calls ---
+export const getForums = () => {
+	return request.get('/forums');
+};
+
+export const getForum = (forumId) => {
+	return request.get(`/forums/${forumId}`);
+};
+
+export const createForum = (forumData) => {
+	return request.post('/forums', forumData);
+};
+
+export const replyToForum = (forumId, replyData) => {
+	return request.post(`/forums/${forumId}/replies`, replyData);
+};
+
+export const likeForum = (forumId, userId) => {
+	return request.post(`/forums/${forumId}/like`, { userId });
+};
+
+export const likeReply = (forumId, replyId, userId) => {
+	return request.post(`/forums/${forumId}/replies/${replyId}/like`, { userId });
+};
