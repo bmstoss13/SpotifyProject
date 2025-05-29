@@ -19,7 +19,7 @@ function LoginPage() {
 
   return (
     <div>
-      <h1>Welcome to spoti.love</h1>
+      <h1>Welcome to Heartify</h1>
       <button onClick={handleLogin}>Login with Spotify</button>
     </div>
   );
