@@ -14,3 +14,14 @@ Using React, Express, and Firebase, create a web application using the Spotify A
 * Discover page: displays all public users, so users can click and view others profiles and send messages
 * Inbox page that shows your chats with other users
 * Forum page that displays all of the discussion boards, which users can click on to access the posts
+
+## Installation
+
+### Frontend
+* First place your two spotify certificates in the frontend root folder:
+      *test-spotify-site.local-key.pem
+      *test-spotify-site.local.pem
+* Then proceed to run the following commands to setup the frontend through your terminal
+`cd frontend`
+`npm install`
+`npm run dev`
