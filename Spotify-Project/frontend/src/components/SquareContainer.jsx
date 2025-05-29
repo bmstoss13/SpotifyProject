@@ -28,7 +28,7 @@ const SquareContainer = ({type, top}) => {
         <User
           key={index}
           profileName={user.profileName}
-          pfp={user.pfp || "https://via.placeholder.com/100"}
+          image={user.image}
         />
       ))}
 
