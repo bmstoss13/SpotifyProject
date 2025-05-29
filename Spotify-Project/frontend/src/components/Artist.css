@@ -73,3 +73,14 @@
     }
   }
   
+  .transparent-button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .transparent-button:focus {
+    outline: none;
+    box-shadow: none;
+  }
