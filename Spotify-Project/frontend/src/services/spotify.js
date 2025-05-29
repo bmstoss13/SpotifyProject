@@ -17,6 +17,7 @@ export const getSpotifyProfile = async (accessToken) => {
 	try {
 		const spotify = createSpotifyRequest(accessToken)
 		const response = await spotify.get('/me');
+		console.log('🎵 Spotify Profile:', response.data);
 		return response.data;
 	}
 	catch (error) {

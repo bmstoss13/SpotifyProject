@@ -60,6 +60,23 @@ const getUserProfile = async (spotifyProfile) => {
   }
 };
 
+const getOtherUserProfile = async(userId) => {
+  try {
+    const userDocRef = db.collection('users').doc(userId);
+    const userDocSnap = await userDocRef.get();
+
+    if (userDocSnap.exists) {
+      console.log("user doc snapshot: " + userDocSnap.id)
+      return { id: userDocSnap.id, ...userDocSnap.data() };
+    } else {
+      throw new Error("User profile does not exist.");
+    }
+  } catch (error) {
+    console.error("Error in getUserProfile:", error);
+    throw error;
+  }
+}
+
 // Update user profile in Firestore
 const updateUserProfile = async (spotifyProfile, profileData) => {
   try {
@@ -135,4 +152,4 @@ const getSpotifyData = async (spotifyProfile) => {
   }
 };
 
-module.exports = { getPublicProfiles, getSpotifyData, getUserId, getUserProfile, saveSpotifyData, updateUserProfile };
+module.exports = { getPublicProfiles, getSpotifyData, getUserId, getUserProfile, saveSpotifyData, updateUserProfile, getPublicProfiles, getOtherUserProfile };
