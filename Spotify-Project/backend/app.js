@@ -4,6 +4,7 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 require('dotenv').config();
+const db = require('./firebase');
 
 const app=express();
 const port = 3000;
@@ -11,8 +12,12 @@ const port = 3000;
 app.use(cors())
 app.use(express.json());
 
+// Ensure we have a session secret
+const sessionSecret = process.env.SPOTIFY_CLIENT_SECRET || 'fallback-secret-key-for-development';
+console.log('Using session secret:', sessionSecret ? 'Secret is set' : 'No secret found');
+
 app.use(session({
-  secret: process.env.SPOTIFY_CLIENT_SECRET,
+  secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
 }));
@@ -30,14 +35,25 @@ app.use('/api/liked-songs', likedSongsRoute);
 // });
 
 const discoverRoute = require("./routes/discover");
-app.use('/discover', discoverRoute);
+
+app.get('/discover', discoverRoute);
+const topRoute = require('./routes/top');
+app.use('/top', topRoute);
 
 
 const authRoute = require("./routes/auth");
 app.use('/auth', authRoute);
 
+
 const userRoute = require("./routes/otherProfiles");
 app.use('/user', userRoute)
+
+const inboxRoute = require("./routes/inbox");
+app.use('/inbox', inboxRoute);
+
+const usersRoute = require("./routes/users");
+app.use('/users', usersRoute);
+
 
 app.get('/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date() });

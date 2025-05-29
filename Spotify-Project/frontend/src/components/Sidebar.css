@@ -1,5 +1,5 @@
 .sidebar {
-  background: pink;
+  background: #FAEAEF;
   width: 280px;
   height: 100vh;
   position: fixed;
@@ -17,24 +17,23 @@
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   padding: 0 1.5rem;
+  text-align: center;
 }
 
 .sidebar-logo {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
   transition: all 0.3s ease;
-  border: 3px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 3px;
 }
 
 .sidebar-logo:hover {
   transform: scale(1.05);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-nav ul {
@@ -99,7 +98,7 @@
   transition: all 0.2s ease;
 }
 
-.login-button {
+/* .login-button {
   background-color: #4A6FFF;
   color: white;
   border: 2px solid #4A6FFF;
@@ -108,7 +107,7 @@
 .login-button:hover {
   background-color: #3A5FEF;
   transform: translateY(-2px);
-}
+} */
 
 .signup-button {
   color: white;
