@@ -1,7 +1,11 @@
+/* Song.css */
+
+/* The outer card */
 .music-card {
   width: 150px;
   height: 150px;
-  background-color: #d9d9d9;
+  background-color: 
+#d9d9d9;
   border-radius: 30px;
   padding: 20px;
   font-family: serif;
@@ -10,77 +14,77 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+/* Profile / album art */
 .artist-image {
-  width: 100px; /* adjust as needed */
+  width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #ccc; /* optional styling */
+  border: 2px solid #ccc;
 }
+
+/* Center the image */
 .music-icon {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+
 .song-info {
   margin-top: auto;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  width: 100%;  
 }
 
-/* Visible container for scrolling text */
+
 .marquee-container {
-  width: 70%;
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
-  height: 20px; /* fits small font sizes */
+  width: 100%;        
+  overflow-x: auto;    
+  overflow-y: hidden; 
+  white-space: nowrap; 
+  text-align: left;    
+  scrollbar-width: auto; 
 }
 
-/* Scrolling text inside the box */
+/* WebKit scrollbar styling */
+.marquee-container::-webkit-scrollbar {
+  height: 1px;
+}
+.marquee-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+
 .marquee {
   display: inline-block;
-  white-space: nowrap;
-  animation: scroll-left 6s linear infinite;
-  font-family: system-ui, sans-serif; /* 👈 Set system font */
-}
-
-/* Apply to each repeated span of text */
-.marquee span {
-  display: inline-block;
-  padding-right: 30px;
+  white-space: nowrap;           
+  font-family: system-ui, sans-serif;
   font-size: 14px;
   color: black;
 }
 
-/* Play button placement */
+/* The play-link/icon position */
 .play-icon {
   position: absolute;
   bottom: -30px;
   right: -30px;
-  color: #1a1b2b;
+  color: 
+#1a1b2b;
   cursor: pointer;
 }
 
-/* Keyframes for smooth looping scroll */
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
+/* Reset for transparent button */
 .transparent-button {
   background-color: transparent;
   border: none;
   outline: none;
   box-shadow: none;
 }
-
 .transparent-button:focus {
   outline: none;
   box-shadow: none;
