@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import { getDiscover } from '../services/api'
 import { useAuth } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import React from "react";
+import '../styles/Discover.css'
+import SquareContainer from '../components/SquareContainer';
 
 const Discover = () => {
   const[users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const[loading, setLoading] = useState(true);
   const { accessToken } = useAuth();
   const navigate = useNavigate();
@@ -41,17 +43,28 @@ const Discover = () => {
     fetchData();
   }, [accessToken, navigate]);
 
+  const filteredUsers = users.filter(user =>
+    user.profileName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (loading) return <p>Loading users...</p>;
   if (users.length === 0) return <p>No users found.</p>;
 
   return (
-    <div>
-      <h1>Discover Page</h1>
-      <ul>{users.map((user) => (
-        <li key={user.id}>
-          <span>{user.username}</span>
-        </li>
-      ))}</ul>
+      <div className="left-aligned-container">
+        <div>
+          <h1 className="top-header">Discover Page</h1>
+        </div>
+          <input
+            type="text"
+            placeholder="Search users by username"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-bar"
+          />
+        <div>
+        </div>
+      <SquareContainer type="user" top={filteredUsers}/>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import Song from "./Song";
 import Artist from "./Artist";
+import User from "./User";
 import "./SquareContainer.css";
 
 // Sample song data (replace or expand this as needed)
@@ -12,15 +13,24 @@ const SquareContainer = ({type, top}) => {
       {type==="songs" && top.map((song, index) => (
         <Song
           key={index}
-          title={song.title}
-          artist={song.artist}
+          track={song.track}
+          artists={song.artists}
+          page={song.page}
+          pfp={song.pfp}
         />
       ))}
       {type==="artists" && top.map((artist, index) => (
         <Artist
           key={index}
-          title={artist.artist}
+          artist={artist.artist}
           pfp={artist.pfp}
+        />
+      ))}
+      {type==="user" && top.map((user, index) => (
+        <User
+          key={index}
+          profileName={user.profileName}
+          pfp={user.pfp || "https://via.placeholder.com/100"}
         />
       ))}
 

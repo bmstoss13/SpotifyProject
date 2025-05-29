@@ -10,11 +10,13 @@ import { useNavigate } from "react-router-dom";
 import { getSpotifyProfile } from '../services/spotify';
 import '../components/Profile.css';
 import { getUserProfile, updateUserProfile, saveSpotifyData } from '../services/firebase-util';
+import TopSongs from './TopSongs';
+import TopArtists from './TopArtists';
 
 // features:
-// user can edit profile
-// user can choose to display artists/songs from their top songs and liked songs pages
-// can make their profile private (hides from discover page)
+	// user can edit profile via modal
+	// user can choose to display artists/songs from their top songs and liked songs pages
+	// user can make their profile private (hides from discover page)
 
 function Profile() {
 
@@ -95,37 +97,34 @@ function Profile() {
 					<CiUser className='profile-picture fallback-icon' />
 				)}
 				<div className='profile-overview'>
-					{/* <h3>Profile</h3> */}
-
-					<h1>{profile.profileName || spotifyProfile?.display_name || "Display Name"}</h1>
-
-					<p>{profile.bio}</p>
-
-					{/* !! follower info goes here !! */}
-					<div className='follower-edit'>
-						<p>Followers: {spotifyProfile?.followers?.total || 0}</p>
+					<div className='name-edit'>
+						<h1>{profile.profileName || spotifyProfile?.display_name || "Display Name"}</h1>
 						<button
 							className="edit-profile-btn"
 							onClick={() => setIsModalOpen(true)}>
-							<FaRegEdit size={25} />
+							<FaRegEdit size={38} />
 						</button>
+					</div>
+				
+					<p>{profile.bio}</p>
+
+					<div className='follower-edit'>
+						<p>Followers: {spotifyProfile?.followers?.total || 0}</p>
 					</div>
 				</div>
 			</header>
 			<div className='profile-body'>
-				{/* {profile.showTopArtists && ( */}
+				{profile.showTopArtists && (
 				<section>
-					<h2>Top Artists</h2>
-					<p>artists go here</p>
+					<TopArtists/>
 				</section>
-				{/* )} */}
+				)}
 
-				{/* {profile.displayTopSongs && ( */}
+				{profile.displayTopSongs && (
 				<section>
-					<h2>Top Songs</h2>
-					<SquareContainer />
+					<TopSongs/>
 				</section>
-				{/* )} */}
+				)}
 
 			</div>
 			{isModalOpen && (
