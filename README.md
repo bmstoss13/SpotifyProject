@@ -26,6 +26,16 @@ Using React, Express, and Firebase, create a web application using the Spotify A
 `npm install`
 `npm run dev`
 
+### Backend
+* Place the following files in your backend root directory:
+      *test-spotify-site.local-key.pem
+      *test-spotify-site.local.pem
+      *permissions.json
+* Run the following commands to setup backend through the terminal
+`cd backend`
+`npm install`
+`npm start`
+
 # How to Use Project
 1. Sign in with Spotify
 * Click the “Log in with Spotify” button on the homepage.
