@@ -86,7 +86,8 @@ router.get('/callback', async (req, res) => {
 
     if (state === null || state !== storedState) {
         return res.redirect('/#' + querystring.stringify({ error: 'state_mismatch' }));
-    } else {
+    } 
+    else {
         delete req.session.spotifyAuthState;
     }
 
@@ -114,7 +115,8 @@ router.get('/callback', async (req, res) => {
 
         return res.redirect(`${FRONTEND_URI}/#` + querystring.stringify({
             access_token: access_token,
-            refresh_token: refresh_token
+            refresh_token: refresh_token,
+            expires_in: expires_in
         }));
     }
     catch (e) {
@@ -122,6 +124,42 @@ router.get('/callback', async (req, res) => {
         return res.redirect('/#' + querystring.stringify({
             error: 'invalid_token'
         }));
+    }
+});
+
+router.get('/refresh_token', async (req, res) => {
+    const refresh_token = req.query.refresh_token;
+    if (!refresh_token) {
+        return res.status(400).json({ error: 'Missing refresh token' });
+    }
+
+    try {
+        const response = await axios.post('https://accounts.spotify.com/api/token',
+            querystring.stringify({
+                grant_type: 'refresh_token',
+                refresh_token: refresh_token
+            }),
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic ' + (Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
+                }
+            }
+        );
+
+        const { access_token, expires_in } = response.data;
+
+        console.log('Refreshed access_token:', access_token);
+        console.log('New expires_in:', expires_in);
+
+        res.json({
+            access_token,
+            expires_in
+        });
+    } 
+    catch(e){
+        console.error('Error refreshing token:', e.response ? e.response.data : e.message);
+        res.status(500).json({ error: 'Failed to refresh token' });
     }
 });
 

@@ -1,12 +1,11 @@
-const { initializeApp } = require("firebase/app");
-const { getFirestore } = require("firebase/firestore");
-
-
+const admin = require("firebase-admin");
 const serviceAccount = require("./permissions.json");
 
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
 
-const app = initializeApp(serviceAccount);
-const db = getFirestore(app);
-
-
+const db = admin.firestore();
 module.exports = db;

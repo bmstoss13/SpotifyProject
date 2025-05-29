@@ -7,6 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+
 permissions.json
 node_modules
 dist
@@ -26,3 +27,7 @@ dist-ssr
 .env
 test-spotify-site.local-key.pem
 test-spotify-site.local.pem
+
+3d3b118cd35f4d14855af654cb252d2ec60851d0
+package-lock.json
+
