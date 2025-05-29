@@ -3,11 +3,11 @@ const axios = require('axios');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
+  const token = req.query.access_token; 
   if (!token) return res.status(401).json({ error: 'Missing token' });
 
   try {
-    const response = await axios.get('https://api.spotify.com/v1/me/tracks?limit=50', {
+    const response = await axios.get('https://api.spotify.com/v1/me/tracks', {
       headers: { Authorization: `Bearer ${token}` }
     });
 
