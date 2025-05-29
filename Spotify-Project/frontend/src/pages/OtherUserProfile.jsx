@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react'
-import Sidebar from '../components/Sidebar'
-import ProfileEditModal from '../components/ProfileEditModal'
+import { useEffect, useState } from 'react';
+import Sidebar from '../components/Sidebar';
+import ProfileEditModal from '../components/ProfileEditModal';
 import { CiUser } from "react-icons/ci";
-import SquareContainer from '../components/SquareContainer'
+import SquareContainer from '../components/SquareContainer'; // Import SquareContainer
 import { FaRegEdit } from "react-icons/fa";
 import { useAuth } from '../components/AuthContext';
 import { useNavigate, useParams } from "react-router-dom";
 import '../components/Profile.css';
 import { viewOtherProfs } from '../services/api';
-
 
 function OtherUserProfile() {
     const [profile, setProfile] = useState(null);
@@ -18,10 +17,9 @@ function OtherUserProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { userId } = useParams();
 
-    // Log the profile state directly in the component body (runs on every render)
+    // Console logs for debugging (keep these for now, remove later if desired)
     console.log("Current profile state in render:", profile);
     console.log("Current loading state in render:", loading);
-
 
     useEffect(() => {
         if (!accessToken) {
@@ -33,24 +31,24 @@ function OtherUserProfile() {
 
         const loadData = async () => {
             try {
-                setLoading(true); //Start loading
+                setLoading(true);
 
-                const response = await viewOtherProfs(userId); 
-                const fetchedProfileData = response.data; 
+                const response = await viewOtherProfs(userId);
+                const fetchedProfileData = response.data; // Extract the actual data from Axios response
 
-                console.log("Fetched data from backend (inside try):", fetchedProfileData); // Now this should show just the profile object (it does!)
+                console.log("Fetched data from backend (inside try):", fetchedProfileData);
 
                 if (fetchedProfileData && Object.keys(fetchedProfileData).length > 0) {
-                    setProfile(fetchedProfileData); 
+                     setProfile(fetchedProfileData);
                 } else {
-                    console.warn("Backend returned empty or null profile for userId:", userId);
-                    setProfile(null);
+                     console.warn("Backend returned empty or null profile for userId:", userId);
+                     setProfile(null);
                 }
 
             }
             catch (e){
                 console.error("Error loading profile from backend:", e);
-                setProfile(null); 
+                setProfile(null);
             }
             finally{
                 console.log("Stopping loading.");
@@ -70,7 +68,6 @@ function OtherUserProfile() {
         return <p>Profile not found or an error occurred.</p>;
     }
 
-
     console.log("Rendering: Displaying profile with data:", profile);
 
     return (
@@ -78,12 +75,11 @@ function OtherUserProfile() {
             <Sidebar />
             <title>User Profile</title>
             <header className='profile-header'>
-
                 {profile.image && typeof profile.image === 'string' && profile.image.trim() !== '' ? (
                     <img
                         className='profile-picture'
                         src={profile.image}
-                        alt={`${profile.profileName || 'User'}'s profile picture`} 
+                        alt={`${profile.profileName || 'User'}'s profile picture`}
                     />
                 ) : (
                     <CiUser className='profile-picture fallback-icon' />
@@ -104,26 +100,24 @@ function OtherUserProfile() {
                 </div>
             </header>
             <div className='profile-body'>
+                {/* Display Top Artists using SquareContainer */}
                 {profile.showTopArtists && (
                     <section>
                         <h2>Top Artists</h2>
                         {profile.topArtists && Array.isArray(profile.topArtists) && profile.topArtists.length > 0 ? (
-                            <ul>
-                                {profile.topArtists.map((artist, index) => (
-                                    <li key={index}>{artist.name || `Artist ${index + 1}`}</li>
-                                ))}
-                            </ul>
+                            <SquareContainer type={"artists"} top={profile.topArtists} />
                         ) : (
                             <p>No top artists to display.</p>
                         )}
                     </section>
                 )}
 
+                {/* Display Top Songs using SquareContainer */}
                 {profile.displayTopSongs && (
                     <section>
                         <h2>Top Songs</h2>
-                        {profile.topSongs && Array.isArray(profile.topSongs) && profile.topSongs.length > 0 ? (
-                            <SquareContainer songs={profile.topSongs} /> 
+                        {profile.topTracks && Array.isArray(profile.topTracks) && profile.topTracks.length > 0 ? (
+                            <SquareContainer type={"songs"} top={profile.topTracks} />
                         ) : (
                             <p>No top songs to display.</p>
                         )}
