@@ -5,7 +5,6 @@ const { getPublicProfiles } = require("../utils/firebase-util");
 router.get('/', async(req, res) => {
     try{
         const profiles = await getPublicProfiles(20);
-        console.log("Profiles: " + profiles)
         const simplifiedProfiles = profiles.map((user) => ({
             id: user.id,
             profileName: user.profileName || 'Unnamed User',
