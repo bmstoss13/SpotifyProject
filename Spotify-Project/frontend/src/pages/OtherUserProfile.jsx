@@ -33,15 +33,15 @@ function OtherUserProfile() {
 
         const loadData = async () => {
             try {
-                setLoading(true); // Start loading
+                setLoading(true); //Start loading
 
-                const response = await viewOtherProfs(userId); // Renamed for clarity
-                const fetchedProfileData = response.data; // <--- Extract the actual data
+                const response = await viewOtherProfs(userId); 
+                const fetchedProfileData = response.data; 
 
-                console.log("Fetched data from backend (inside try):", fetchedProfileData); // Now this should show just your profile object
+                console.log("Fetched data from backend (inside try):", fetchedProfileData); // Now this should show just the profile object (it does!)
 
                 if (fetchedProfileData && Object.keys(fetchedProfileData).length > 0) {
-                    setProfile(fetchedProfileData); // <--- Set the state with the extracted data
+                    setProfile(fetchedProfileData); 
                 } else {
                     console.warn("Backend returned empty or null profile for userId:", userId);
                     setProfile(null);
@@ -50,18 +50,17 @@ function OtherUserProfile() {
             }
             catch (e){
                 console.error("Error loading profile from backend:", e);
-                setProfile(null); // Ensure profile is null on error
+                setProfile(null); 
             }
             finally{
                 console.log("Stopping loading.");
-                setLoading(false); // Always stop loading, regardless of success or error
+                setLoading(false);
             }
         };
         loadData();
     }, [userId, accessToken, navigate]);
 
 
-    // Your early return conditions
     if (loading) {
         console.log("Rendering: Loading profile...");
         return <p>Loading profile...</p>;
@@ -71,7 +70,7 @@ function OtherUserProfile() {
         return <p>Profile not found or an error occurred.</p>;
     }
 
-    // If we reach here, profile should be a non-null, non-empty object
+
     console.log("Rendering: Displaying profile with data:", profile);
 
     return (
@@ -79,23 +78,20 @@ function OtherUserProfile() {
             <Sidebar />
             <title>User Profile</title>
             <header className='profile-header'>
-                {/* Check if profile.image exists and is a non-empty string */}
+
                 {profile.image && typeof profile.image === 'string' && profile.image.trim() !== '' ? (
                     <img
                         className='profile-picture'
                         src={profile.image}
-                        alt={`${profile.profileName || 'User'}'s profile picture`} // Better alt text
+                        alt={`${profile.profileName || 'User'}'s profile picture`} 
                     />
                 ) : (
                     <CiUser className='profile-picture fallback-icon' />
                 )}
                 <div className='profile-overview'>
-                    {/* Use profile.profileName, with a fallback */}
                     <h1>{profile.profileName || "Display Name"}</h1>
-                    {/* Use profile.bio, with a fallback */}
                     <p>{profile.bio || "No bio provided."}</p>
                     <div className='follower-edit'>
-                        {/* Use profile.followers, with a fallback */}
                         <p>Followers: {profile.followers || 0}</p>
                         {currentAuthUserId === userId && (
                             <button
@@ -108,7 +104,6 @@ function OtherUserProfile() {
                 </div>
             </header>
             <div className='profile-body'>
-                {/* Ensure profile.showTopArtists and profile.topArtists are handled correctly */}
                 {profile.showTopArtists && (
                     <section>
                         <h2>Top Artists</h2>
@@ -124,12 +119,11 @@ function OtherUserProfile() {
                     </section>
                 )}
 
-                {/* Ensure profile.displayTopSongs and profile.topSongs are handled correctly */}
                 {profile.displayTopSongs && (
                     <section>
                         <h2>Top Songs</h2>
                         {profile.topSongs && Array.isArray(profile.topSongs) && profile.topSongs.length > 0 ? (
-                            <SquareContainer songs={profile.topSongs} /> // Pass songs prop to SquareContainer
+                            <SquareContainer songs={profile.topSongs} /> 
                         ) : (
                             <p>No top songs to display.</p>
                         )}

@@ -35,8 +35,8 @@ app.use('/api/liked-songs', likedSongsRoute);
 // });
 
 const discoverRoute = require("./routes/discover");
+app.use('/discover', discoverRoute);
 
-app.get('/discover', discoverRoute);
 const topRoute = require('./routes/top');
 app.use('/top', topRoute);
 
@@ -73,5 +73,3 @@ https.createServer(options, app).listen(port, () => {
     `HTTPS Server is running on https://test-spotify-site.local:${port}`
   );
 });
-
-
