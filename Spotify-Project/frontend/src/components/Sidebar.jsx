@@ -72,7 +72,7 @@ const Sidebar = () => {
             </Link>
           </li>
 		  <li>
-			<Link to="/" classNameclassName={isActive('/') ? 'active' : ''}>
+			<Link to="/" className={isActive('/') ? 'active' : ''}>
 			<FaUser /> Profile
 			</Link>
 		  </li>
