@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -13,41 +14,66 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
     const auth = hashParams.get("access_token");
-    console.log("Auth Context: Access Token:", auth);
     const refresh = hashParams.get("refresh_token");
-    console.log("Auth Context: Refresh Token:", refresh);
     const expires = hashParams.get("expires_in");
 
     if (auth) {
       localStorage.setItem("access_token", auth);
       localStorage.setItem("refresh_token", refresh);
       localStorage.setItem("expires_in", expires);
+      localStorage.setItem("token_timestamp", Date.now().toString());
 
 
       setAccessToken(auth);
       setRefreshToken(refresh);
       setExpiresIn(expires);
 
-
-      // ⚠️ Clean URL
       window.history.replaceState(null, '', window.location.pathname);
 
-      // ✅ IMMEDIATE redirect
+      // Redirect
       navigate("/profile");
     }
   }, [navigate]);
 
-    useEffect(() => {
-        if (accessToken && refreshToken && expiresIn) {
-            localStorage.setItem("access_token", accessToken);
-            localStorage.setItem("refresh_token", refreshToken);
-            localStorage.setItem("expires_in", expiresIn);
-        }
-    }, [accessToken, refreshToken, expiresIn]);
+
+  // Utility to check token expiration
+  const isTokenExpired = () => {
+    const expiresIn = localStorage.getItem("expires_in");
+    const tokenTime = localStorage.getItem("token_timestamp");
+
+    if (!expiresIn || !tokenTime) return true;
+
+    const now = Date.now();
+    const elapsed = (now - parseInt(tokenTime, 10)) / 1000; // in seconds
+    return elapsed >= parseInt(expiresIn, 10);
+  };
+
+  // Get a fresh access token if needed
+  const getValidAccessToken = async () => {
+    if (!isTokenExpired()) return localStorage.getItem("access_token");
+
+    try {
+      const res = await axios.get(`https://test-spotify-site.local:3000/auth/refresh?refresh_token=${refreshToken}`);
+      const { access_token, expires_in } = res.data;
+
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("expires_in", expires_in);
+      localStorage.setItem("token_timestamp", Date.now().toString());
+
+      setAccessToken(access_token);
+      setExpiresIn(expires_in);
+
+      return access_token;
+    } catch (err) {
+      console.error("Failed to refresh access token:", err);
+      return null;
+    }
+  };
+
 
 
   return (
-    <AuthContext.Provider value={{ accessToken, refreshToken, expiresIn }}>
+    <AuthContext.Provider value={{ accessToken, refreshToken, expiresIn, getValidAccessToken }}>
       {children}
     </AuthContext.Provider>
   );

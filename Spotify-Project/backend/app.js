@@ -4,6 +4,7 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 require('dotenv').config();
+const db = require('./firebase');
 
 const app=express();
 const port = 3000;
@@ -30,7 +31,10 @@ app.get('/', (req, res) => {
 });
 
 const discoverRoute = require("./routes/discover");
-app.use('/discover', discoverRoute);
+
+app.get('/discover', discoverRoute);
+const topRoute = require('./routes/top');
+app.use('/top', topRoute);
 
 
 const authRoute = require("./routes/auth");

@@ -7,17 +7,17 @@ export default function TimeFilter({ changeTime }) {
       defaultValue="at"
       onChange={(event, newValue) => {
         if (newValue === "at") {
-          changeTime("All-Time");
-        } else if (newValue === "ly") {
-          changeTime("Last Year");
+          changeTime("long_term");
+        } else if (newValue === "lhy") {
+          changeTime("medium_term");
         } else if (newValue === "lm") {
-          changeTime("Last Month");
+          changeTime("short_term");
         }
         console.log("value changed to: ", newValue);
       }}
     >
-      <Option value="at">All-Time</Option>
-      <Option value="ly">Last Year</Option>
+      <Option value="at">Last Year</Option>
+      <Option value="lhy">Last 6 Months</Option>
       <Option value="lm">Last Month</Option>
     </Select>
   );
