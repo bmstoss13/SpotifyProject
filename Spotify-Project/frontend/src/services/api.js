@@ -34,3 +34,7 @@ export const getUserProfile = (userId) => {
 	return request.get(`/users/${userId}`);
 };
 
+export const viewOtherProfs = (userId) => {
+    return request.get(`/user/${userId}`);
+}
+
