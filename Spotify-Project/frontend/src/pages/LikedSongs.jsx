@@ -1,21 +1,40 @@
-import React from 'react';
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import Sidebar from '../components/Sidebar';
 import './LikedSongs.css';
 import { FaHeart } from 'react-icons/fa';
-
-
-const mockSongs = [
-  { title: "Blinding Lights", album: "After Hours", dateAdded: "April 21, 2025", duration: "4:46" },
-  { title: "In Your Eyes", album: "After Hours", dateAdded: "April 21, 2025", duration: "3:45" },
-  { title: "Save Your Tears", album: "After Hours", dateAdded: "April 21, 2025", duration: "3:23" },
-  { title: "After Hours", album: "After Hours", dateAdded: "April 21, 2025", duration: "4:32" },
-  { title: "Until I Bleed Out", album: "After Hours", dateAdded: "April 21, 2025", duration: "9:22" },
-  { title: "Alone Again", album: "After Hours", dateAdded: "April 21, 2025", duration: "0:34" },
-  { title: "Too Late", album: "After Hours", dateAdded: "April 21, 2025", duration: "10:23" },
-];
+import { useAuth } from '../components/AuthContext'; 
 
 export default function LikedSongs() {
+  const { accessToken } = useAuth(); 
+  const [songs, setSongs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!accessToken) return;
+    setLoading(true); // start loading
+
+    fetch('/api/liked-songs', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then(data => {
+        setSongs(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to load liked songs:", err);
+        setSongs([]); // or set an error state
+        setLoading(false);
+      });
+  }, [accessToken]);
+
   return (
     <div className="liked-songs-wrapper">
       <Sidebar />
@@ -28,7 +47,7 @@ export default function LikedSongs() {
           <div className="header-text">
             <p className="playlist-label">Playlist</p>
             <h1 className="liked-songs-title">Liked Songs</h1>
-            <p className="subtitle">saksham ● 30 songs</p>
+            <p className="subtitle">You • {songs.length} songs</p>
           </div>
         </section>
 
@@ -40,20 +59,30 @@ export default function LikedSongs() {
             <span>Date added</span>
             <span>🕒</span>
           </div>
-
-          {mockSongs.map((song, i) => (
-            <div key={i} className="song-row">
-              <span>#{i + 1}</span>
-              <span>{song.title}</span>
-              <span>{song.album}</span>
-              <span>{song.dateAdded}</span>
-              <span>{song.duration}</span>
-            </div>
-          ))}
+          {(!songs || songs.length === 0) ? (
+              <div style={{padding: "2rem", textAlign: "center"}}>Loading...</div>
+            ) : (
+            songs.map((song, i) => (
+              <div key={i} className="song-row">
+                <span>{i + 1}</span>
+                <span>#{song.title}</span>
+                <span>{song.album}</span>
+                <span>{song.dateAdded}</span>
+                <span>{song.duration}</span>
+                <img src ={song.albumArt} alt="" />
+              </div>
+            ))
+          )}
         </section>
         </div>
       </main>
     </div>
     
   );
+}
+
+function msToMinSec(ms) {
+  const min = Math.floor(ms / 60000);
+  const sec = Math.floor((ms % 60000) / 1000);
+  return `${min}:${sec.toString().padStart(2, '0')}`;
 }

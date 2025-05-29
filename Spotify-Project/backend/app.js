@@ -71,5 +71,3 @@ https.createServer(options, app).listen(port, () => {
     `HTTPS Server is running on https://test-spotify-site.local:${port}`
   );
 });
-
-
