@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './Forums.css';
 import { getForums, getForum, createForum, replyToForum, likeForum, likeReply, getUserProfile } from '../services/api';
 import { FaHeart, FaComment, FaRegHeart } from 'react-icons/fa';
+import { useAuth } from '../components/AuthContext';
+import { getSpotifyProfile } from '../services/spotify'; // To get current user profile
 
 const Forums = () => {
   const [forums, setForums] = useState([]);
@@ -12,9 +14,36 @@ const Forums = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newForumTitle, setNewForumTitle] = useState('');
   const [newForumBody, setNewForumBody] = useState('');
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [userLoading, setUserLoading] = useState(false);
   
-  // Using hardcoded user ID for testing as in Inbox
-  const currentUserId = "testUser1";
+  // Get access token from AuthContext
+  const { accessToken } = useAuth();
+
+  // Fetch current user ID when component mounts or access token changes
+  useEffect(() => {
+    const fetchCurrentUserId = async () => {
+      if (!accessToken) {
+        setCurrentUserId(null);
+        setUserLoading(false);
+        return;
+      }
+
+      try {
+        setUserLoading(true);
+        const spotifyProfile = await getSpotifyProfile(accessToken);
+        setCurrentUserId(spotifyProfile.id);
+        console.log("Forums: Using currentUserId:", spotifyProfile.id);
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+        setCurrentUserId(null);
+      } finally {
+        setUserLoading(false);
+      }
+    };
+
+    fetchCurrentUserId();
+  }, [accessToken]);
   
   // Cache for user profiles
   const userProfilesCache = useRef({});
@@ -102,8 +131,11 @@ const Forums = () => {
   }, [fetchUserProfile, currentUserId]);
 
   useEffect(() => {
-    fetchForums();
-  }, [fetchForums]);
+    // Only fetch forums if user is not loading (forums can be viewed without auth, but features require auth)
+    if (!userLoading) {
+      fetchForums();
+    }
+  }, [fetchForums, userLoading]);
 
   const formatTimeAgo = (timestamp) => {
     const date = timestamp._seconds ? new Date(timestamp._seconds * 1000) : new Date(timestamp);
@@ -121,6 +153,11 @@ const Forums = () => {
   };
 
   const handleCreateForum = async () => {
+    if (!currentUserId) {
+      alert('Please log in to create a forum');
+      return;
+    }
+    
     if (!newForumTitle.trim() || !newForumBody.trim()) {
       alert('Please fill in both title and body');
       return;
@@ -145,25 +182,51 @@ const Forums = () => {
   };
 
   const handleSendReply = async (e) => {
-    if (e.key === 'Enter' && newReply.trim() && selectedForum) {
+    if (e.key === 'Enter' && newReply.trim() && currentUserId) {
       try {
         const replyData = {
+          forumId: selectedForum.id,
           body: newReply.trim(),
           createdBy: currentUserId
         };
         
+        console.log('Sending reply with data:', replyData);
         await replyToForum(selectedForum.id, replyData);
         setNewReply('');
-        fetchForumDetails(selectedForum.id); // Refresh forum details
-        fetchForums(); // Refresh forum list to update reply count
+        fetchForumDetails(selectedForum.id); // Refresh to show new reply
       } catch (err) {
         console.error("Failed to send reply:", err);
-        alert("Error sending reply: " + (err.response?.data?.error || err.message));
+        alert("Failed to send reply. Please try again.");
+      }
+    }
+  };
+
+  const handleSendReplyButton = async () => {
+    if (newReply.trim() && currentUserId) {
+      try {
+        const replyData = {
+          forumId: selectedForum.id,
+          body: newReply.trim(),
+          createdBy: currentUserId
+        };
+        
+        console.log('Sending reply with data:', replyData);
+        await replyToForum(selectedForum.id, replyData);
+        setNewReply('');
+        fetchForumDetails(selectedForum.id); // Refresh to show new reply
+      } catch (err) {
+        console.error("Failed to send reply:", err);
+        alert("Failed to send reply. Please try again.");
       }
     }
   };
 
   const handleLikeReply = async (replyId) => {
+    if (!currentUserId) {
+      alert('Please log in to like replies');
+      return;
+    }
+    
     try {
       await likeReply(selectedForum.id, replyId, currentUserId);
       fetchForumDetails(selectedForum.id); // Refresh to get updated like count
@@ -173,6 +236,11 @@ const Forums = () => {
   };
 
   const handleLikeForum = async () => {
+    if (!currentUserId) {
+      alert('Please log in to like forums');
+      return;
+    }
+    
     try {
       await likeForum(selectedForum.id, currentUserId);
       fetchForumDetails(selectedForum.id); // Refresh to get updated like count
@@ -182,7 +250,7 @@ const Forums = () => {
     }
   };
 
-  if (loading && forums.length === 0) {
+  if ((loading && forums.length === 0) || userLoading) {
     return <div className="forums-container"><p>Loading forums...</p></div>;
   }
   
@@ -196,7 +264,12 @@ const Forums = () => {
       <div className="forums-sidebar">
         <div className="forums-sidebar-header">
           <h1>Forums</h1>
-          <button className="create-forum-btn" onClick={() => setShowCreateModal(true)}>
+          <button 
+            className="create-forum-btn" 
+            onClick={() => setShowCreateModal(true)}
+            disabled={!currentUserId}
+            title={!currentUserId ? "Please log in to create forums" : ""}
+          >
             Create Forum
           </button>
         </div>
@@ -247,6 +320,8 @@ const Forums = () => {
                 <button 
                   className={`like-btn ${selectedForum.isLikedByCurrentUser ? 'liked' : ''}`}
                   onClick={handleLikeForum}
+                  disabled={!currentUserId}
+                  title={!currentUserId ? "Please log in to like" : ""}
                 >
                   {selectedForum.isLikedByCurrentUser ? <FaHeart /> : <FaRegHeart />}
                   <span className="like-count">{selectedForum.likes || 0}</span>
@@ -273,6 +348,8 @@ const Forums = () => {
                     <button 
                       className={`like-btn ${reply.isLikedByCurrentUser ? 'liked' : ''}`}
                       onClick={() => handleLikeReply(reply.id)}
+                      disabled={!currentUserId}
+                      title={!currentUserId ? "Please log in to like" : ""}
                     >
                       {reply.isLikedByCurrentUser ? <FaHeart /> : <FaRegHeart />}
                       <span className="like-count">{reply.likes || 0}</span>
@@ -289,11 +366,20 @@ const Forums = () => {
             <div className="reply-input-area">
               <input 
                 type="text" 
-                placeholder={`Reply to this forum...`}
+                placeholder={currentUserId ? `Reply to this forum...` : "Please log in to reply..."}
                 value={newReply}
                 onChange={(e) => setNewReply(e.target.value)}
                 onKeyPress={handleSendReply}
+                disabled={!currentUserId}
               />
+              <button 
+                className="send-button"
+                onClick={handleSendReplyButton}
+                disabled={!currentUserId || !newReply.trim()}
+                title={!currentUserId ? "Please log in to reply" : "Send reply"}
+              >
+                Send
+              </button>
             </div>
           </>
         ) : (

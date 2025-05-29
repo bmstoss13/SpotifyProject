@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './Inbox.css';
 import { getInboxThreads, sendMessage, searchUsers, getUserProfile } from '../services/api'; // Import API functions
 import { useAuth } from '../components/AuthContext'; // To get current user ID
+import { getSpotifyProfile } from '../services/spotify'; // To get current user profile
 
 // Debounce utility
 function debounce(func, delay) {
@@ -23,12 +24,39 @@ const Inbox = () => {
   const [searchResults, setSearchResults] = useState([]); // For users found via search
   const [isSearching, setIsSearching] = useState(false); // To distinguish search mode
   const [loadingSearch, setLoadingSearch] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [userLoading, setUserLoading] = useState(false);
 
-  // Using a hardcoded user ID for testing as requested.
-  const currentUserId = "testUser1"; // Hardcoded for now
-  console.log("Inbox: Using currentUserId:", currentUserId);
+  // Get access token from AuthContext
+  const { accessToken } = useAuth();
 
-  // const { accessToken } = useAuth(); // Commenting out useAuth if not fully set up for user ID retrieval yet
+  // Fetch current user ID when component mounts or access token changes
+  useEffect(() => {
+    const fetchCurrentUserId = async () => {
+      if (!accessToken) {
+        setCurrentUserId(null);
+        setError("Please log in to view your messages.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setUserLoading(true);
+        const spotifyProfile = await getSpotifyProfile(accessToken);
+        setCurrentUserId(spotifyProfile.id);
+        console.log("Inbox: Using currentUserId:", spotifyProfile.id);
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+        setCurrentUserId(null);
+        setError("Failed to get user information. Please try logging in again.");
+        setLoading(false);
+      } finally {
+        setUserLoading(false);
+      }
+    };
+
+    fetchCurrentUserId();
+  }, [accessToken]);
 
   // Helper to fetch user profiles (can be memoized or moved to a context/cache)
   const userProfilesCache = useRef({}); // Simple cache for user profiles
@@ -134,8 +162,15 @@ const Inbox = () => {
   }, [currentUserId, fetchUserProfile]);
 
   useEffect(() => {
-    fetchThreadsAndUserNames();
-  }, [fetchThreadsAndUserNames]);
+    // Only fetch threads if we have a current user ID and user is not loading
+    if (currentUserId && !userLoading) {
+      fetchThreadsAndUserNames();
+    } else if (!userLoading && !currentUserId) {
+      // User is loaded but no user ID available (not authenticated)
+      setError("Please log in to view your messages.");
+      setLoading(false);
+    }
+  }, [fetchThreadsAndUserNames, currentUserId, userLoading]);
   
   // Debounced search function
   const debouncedSearch = useCallback(debounce(async (query) => {
@@ -245,8 +280,61 @@ const Inbox = () => {
     }
   };
 
+  // Handle send button click
+  const handleSendButtonClick = async () => {
+    if (newMessage.trim() && selectedThread && selectedThread.id) {
+      console.log("Inbox: Sending message via button...");
+      const recipientId = selectedThread.id;
+      
+      const messageData = {
+        senderId: currentUserId,
+        recipientId: recipientId,
+        subject: selectedThread.subject || `Message to ${selectedThread.name || recipientId}`,
+        body: newMessage.trim(),
+      };
+      console.log("Inbox: Message data to send:", messageData);
+
+      try {
+        const response = await sendMessage(recipientId, messageData);
+        console.log("Inbox: Send message API response:", response);
+        const sentMessage = response.data;
+
+        const newMsgForUI = {
+          id: sentMessage.id,
+          sender: 'Me',
+          text: sentMessage.body,
+          timestamp: sentMessage.timestamp ? 
+            new Date(sentMessage.timestamp._seconds ? sentMessage.timestamp._seconds * 1000 + sentMessage.timestamp._nanoseconds / 1000000 : sentMessage.timestamp)
+            .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+            : 'Invalid date'
+        };
+
+        const updatedThread = {
+          ...selectedThread,
+          messages: [...selectedThread.messages, newMsgForUI],
+          lastMessage: newMsgForUI.text,
+          time: 'Just now'
+        };
+
+        const updatedThreads = threads.map(t => 
+          t.id === selectedThread.id ? updatedThread : t
+        );
+        
+        const finalThreads = [updatedThread, ...updatedThreads.filter(t => t.id !== selectedThread.id)];
+
+        setThreads(finalThreads);
+        setSelectedThread(updatedThread);
+        setNewMessage('');
+        console.log("Inbox: Message sent and UI updated.");
+      } catch (err) {
+        console.error("Inbox: Failed to send message:", err);
+        alert("Error sending message: " + (err.response?.data?.error || err.message));
+      }
+    }
+  };
+
   // Render logic with checks for loading, error, and no threads
-  if (loading && threads.length === 0) {
+  if ((loading && threads.length === 0) || userLoading) {
     console.log("Inbox: Rendering primary loading state (initial load or full refresh).");
     return <div className="inbox-container"><p>Loading messages...</p></div>;
   }
@@ -381,6 +469,14 @@ const Inbox = () => {
                 onKeyPress={handleSendMessage}
                 disabled={!selectedThread.id} // Disable if no user/thread selected for messaging
               />
+              <button 
+                className="send-button"
+                onClick={handleSendButtonClick}
+                disabled={!selectedThread.id || !newMessage.trim()}
+                title="Send message"
+              >
+                Send
+              </button>
             </div>
           </>
         ) : (
