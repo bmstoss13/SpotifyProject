@@ -6,7 +6,7 @@ import { useAuth } from "../components/AuthContext";
 import axios from "axios";
 const TopSongs = () => {
   const { getValidAccessToken } = useAuth();
-  const [time, changeTime] = useState("All-Time");
+  const [time, changeTime] = useState("long_term");
   const [songs, setSongs] = useState([]);
   const fetchCoverImage = async(id) =>{
     try {
@@ -50,7 +50,7 @@ const TopSongs = () => {
       console.log("Access Token:", accessToken);
       if (!accessToken) return console.log("❌ No access token");
       const response = await axios.get(
-        `https://test-spotify-site.local:3000/top/top-songs?access_token=${accessToken}`
+        `https://test-spotify-site.local:3000/top/top-songs?access_token=${accessToken}&time_range=${time}`
       );
       console.log(response.data.items);
       breakResponse(response.data.items);
@@ -61,6 +61,11 @@ const TopSongs = () => {
   useEffect(() => {
     fetchSongs(); // runs once on mount
   }, []);
+  useEffect(() => {
+    console.log(time);
+    fetchSongs();
+  }
+  , [time]);
   return (
     <>
       <div className="left-aligned-container">

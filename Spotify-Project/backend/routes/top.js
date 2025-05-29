@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-
+const db = require('../firebase');
 // GET /top-artists?access_token=...
 router.get("/top-artists", async (req, res) => {
-  const accessToken = req.query.access_token; // not req.params
+  const accessToken = req.query.access_token;
+  const time = req.query.time_range; // not req.params
 
   if (!accessToken) {
     return res.status(400).json({ error: "Access token is required" });
@@ -12,7 +13,7 @@ router.get("/top-artists", async (req, res) => {
 
   try {
     const response = await axios.get(
-      "https://api.spotify.com/v1/me/top/artists",
+      `https://api.spotify.com/v1/me/top/artists?time_range=${time}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -53,16 +54,43 @@ router.get("/coverimage", async (req, res) => {
       res.status(500).json({ error: "Failed to fetch track info" });
     }
   });
-  
+
+router.post("update-artists/", async (req, res) => {
+  const id = req.query.id;
+  const { topArtists } = req.body;
+  try {
+    const docRef = db.collection("top").doc(id);
+    await docRef.update({ topArtists }); 
+    res.status(200).send("Document updated successfully");
+  } catch (err) {
+    console.error("Error updating document: ", err);
+    res.status(500).send("Error updating document");
+  }
+
+});
+
+router.post("update-songs/", async (req, res) => {
+  const id = req.query.id;
+  const { topSongs } = req.body;
+  try {
+    const docRef = db.collection("top").doc(id);
+    await docRef.update({ topSongs }); 
+    res.status(200).send("Document updated successfully");
+  } catch (err) {
+    console.error("Error updating document: ", err);
+    res.status(500).send("Error updating document");
+  }
+});
+
 router.get("/top-songs", async (req, res) => {
   const accessToken = req.query.access_token; // not req.params
-
+  const time = req.query.time_range; 
   if (!accessToken) {
     return res.status(400).json({ error: "Access token is required" });
   }
   try {
     const response = await axios.get(
-      "https://api.spotify.com/v1/me/top/tracks",
+      `https://api.spotify.com/v1/me/top/tracks?time_range=${time}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -80,5 +108,6 @@ router.get("/top-songs", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch top tracks" });
   }
 });
+
 
 module.exports = router;
