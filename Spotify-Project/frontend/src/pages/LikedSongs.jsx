@@ -5,35 +5,35 @@ import { FaHeart } from 'react-icons/fa';
 import { useAuth } from '../components/AuthContext'; 
 
 export default function LikedSongs() {
-  const { accessToken } = useAuth(); 
+  const { getValidAccessToken } = useAuth(); 
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!accessToken) return;
-    setLoading(true); // start loading
-
-    fetch('/api/liked-songs', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
+  useEffect(async () => {
+    const fetchLikedSongs = async () => {
+      const accessToken = await getValidAccessToken();
+      if (!accessToken) {
+        setLoading(false);
+        return;
       }
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
-      })
-      .then(data => {
-        setSongs(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to load liked songs:", err);
-        setSongs([]); // or set an error state
-        setLoading(false);
-      });
-  }, [accessToken]);
+      fetch(`/api/liked-songs?access_token=${accessToken}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Network error");
+          return res.json();
+        })
+        .then(data => {
+          setSongs(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error("Failed to load liked songs:", err);
+          setSongs([]);
+          setLoading(false);
+        });
+    };
+    fetchLikedSongs();
+  }, [getValidAccessToken]);
+   
 
   return (
     <div className="liked-songs-wrapper">
