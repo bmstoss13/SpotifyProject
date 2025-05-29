@@ -41,9 +41,42 @@ router.get('/login', (req, res) => {
     );
 });
 
+// backend/routes/auth.js
+router.get('/refresh', async (req, res) => {
+    const refreshToken = req.query.refresh_token;
+    if (!refreshToken) {
+      return res.status(400).json({ error: 'Missing refresh token' });
+    }
+  
+    try {
+      const response = await axios.post(
+        'https://accounts.spotify.com/api/token',
+        querystring.stringify({
+          grant_type: 'refresh_token',
+          refresh_token: refreshToken,
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64'),
+          },
+        }
+      );
+  
+      const { access_token, expires_in } = response.data;
+      res.json({ access_token, expires_in });
+    } catch (e) {
+      console.error('Error refreshing token:', e.response?.data || e.message);
+      res.status(500).json({ error: 'Failed to refresh token' });
+    }
+  });
+  
+
 
 
 //Server to Server request
+
+
 
 
 router.get('/callback', async (req, res) => {

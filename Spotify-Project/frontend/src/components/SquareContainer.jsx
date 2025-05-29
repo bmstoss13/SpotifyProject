@@ -13,14 +13,16 @@ const SquareContainer = ({type, top}) => {
       {type==="songs" && top.map((song, index) => (
         <Song
           key={index}
-          title={song.title}
-          artist={song.artist}
+          track={song.track}
+          artists={song.artists}
+          page={song.page}
+          pfp={song.pfp}
         />
       ))}
       {type==="artists" && top.map((artist, index) => (
         <Artist
           key={index}
-          title={artist.artist}
+          artist={artist.artist}
           pfp={artist.pfp}
         />
       ))}
