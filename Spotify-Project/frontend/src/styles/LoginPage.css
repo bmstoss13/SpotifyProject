@@ -1,0 +1,42 @@
+.login-page {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	padding: 0;
+	margin: 0;
+	background: linear-gradient(335deg, #00d9ff,#ffb8e5, #ff3fb9);
+	background-size: 120% 120%;
+	animation: gradient-animation 15s ease infinite;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.full-screen {
+	width: 100vw;
+	height: 100vh;
+	padding: 0;
+	margin: 0;
+	max-width: none;
+}
+
+.welcome-text {
+	color: white;
+	font-size: 4rem;
+}
+
+@keyframes gradient-animation {
+	0% {
+		background-position: 0% 50%;
+	}
+
+	50% {
+		background-position: 100% 50%;
+	}
+
+	100% {
+		background-position: 0% 50%;
+	}
+}
