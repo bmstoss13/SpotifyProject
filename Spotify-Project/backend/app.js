@@ -30,9 +30,9 @@ app.use("/profile", profileRoute);
 app.use('/api/liked-songs', likedSongsRoute);
 
 
-app.get('/', (req, res) => {
-    res.send("Spotify Project homepage");
-});
+// app.get('/', (req, res) => {
+//     res.send("Spotify Project homepage");
+// });
 
 const discoverRoute = require("./routes/discover");
 
@@ -43,6 +43,10 @@ app.use('/top', topRoute);
 
 const authRoute = require("./routes/auth");
 app.use('/auth', authRoute);
+
+
+const userRoute = require("./routes/otherProfiles");
+app.use('/user', userRoute)
 
 const inboxRoute = require("./routes/inbox");
 app.use('/inbox', inboxRoute);
