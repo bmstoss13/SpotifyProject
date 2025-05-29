@@ -9,17 +9,27 @@ const TopArtists = () => {
   const { getValidAccessToken } = useAuth();
   const [time, changeTime] = useState("long_term");
   const [artists, setArtists] = useState([]);
-  const updateDatabase = async (topArtists) => {
+  const [id, setId] = useState("");
+  const fetchSpotifyUserId = async () => {
+    const accessToken = await getValidAccessToken();
+    const response = await axios.get(
+      `https://test-spotify-site.local:3000/top/user-id?access_token=${accessToken}`
+    );
+    const userId = response.data.userId;
+    setId(userId);
+    return userId;
+  };
+  const updateUser = async (topArtists) => {
     try {
       const response = await axios.post(
         `https://test-spotify-site.local:3000/top/update-artists/?id=${id}`,
-        {topArtists}
+        { topArtists }
       );
       console.log("Database updated:", response.data);
     } catch (error) {
       console.error("Error updating database:", error);
     }
-  }
+  };
 
   const breakResponse = (response) => {
     const temp = response.map((artist) => ({
@@ -46,18 +56,27 @@ const TopArtists = () => {
   };
 
   useEffect(() => {
-    fetchArtists(); // runs once on mount
-    //updateDatabase(artists); // update database with initial artist
+    const fetchAll = async () => {
+      await fetchSpotifyUserId(); // sets id
+      await fetchArtists(); // sets artists
+    };
+    fetchAll();
   }, []);
-  
+
   useEffect(() => {
-    //console.log("Updated artists:", artists); // track artists state updates (optional)
-  }, [artists]);
+    if (id && artists.length > 0) {
+      updateUser(artists);
+    }
+  }, [id, artists]);
 
   useEffect(() => {
     console.log(time);
     fetchArtists();
+    updateUser(artists);
   }, [time]);
+  useEffect(() => {
+    console.log("ID CHANGES", id);
+  }, [id]); // track changes to id
 
   return (
     <div className="left-aligned-container">
