@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import Sidebar from './components/Sidebar';
 import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import OtherUserProfile from './pages/OtherUserProfile';
 import './App.css';
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
           <Route path="/top-songs" element={<ProtectedRoute><TopSongs /></ProtectedRoute>} />
           <Route path="/discover" element={<ProtectedRoute><Discover /></ProtectedRoute>} />
           <Route path="/forums" element={<ProtectedRoute><Forums /></ProtectedRoute>} />
+          <Route path="/profile/:userId" element={<ProtectedRoute><OtherUserProfile /></ProtectedRoute>} />
         </Routes>
       </main>
     </div>
