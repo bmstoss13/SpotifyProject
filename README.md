@@ -16,7 +16,7 @@ Using a React frontend, Express backend, and Firebase database, we created a web
 * Forum page that displays all of the discussion boards, which users can click on to access the posts
 
 
-## How to Use Project
+## Installation Guide
 =======
 ### .env
 * Place the .env file in the project's root directory, `Spotify-Project`.
