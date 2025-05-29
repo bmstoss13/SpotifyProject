@@ -22,7 +22,7 @@ const Song = ({ track, artists, page, pfp }) => {
         rel="noopener noreferrer"
         className="play-icon transparent-button"
       >
-        <CgPlayButton size={125} />
+        <CgPlayButton size={100} />
       </a>
     </div>
   );
