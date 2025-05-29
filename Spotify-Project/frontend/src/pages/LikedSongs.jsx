@@ -70,16 +70,29 @@ export default function LikedSongs() {
           {(!songs || songs.length === 0) ? (
               <div style={{padding: "2rem", textAlign: "center"}}>Loading...</div>
             ) : (
-            songs.map((song, i) => (
-              <div key={i} className="song-row">
-                <span>{i + 1}</span>
-                <span>#{song.title}</span>
-                <span>{song.album}</span>
-                <span>{song.dateAdded}</span>
-                <span>{song.duration}</span>
-                <img src ={song.albumArt} alt="" />
-              </div>
-            ))
+              songs.map((song, i) => (
+                <div key={i} className="song-row">
+                  <span>{i + 1}</span>
+                  <span className="title-cell">
+                    <img
+                      src={song.albumArt}
+                      alt=""
+                      className="album-art"
+                      style={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: 4,
+                        objectFit: "cover",
+                        marginRight: 12,
+                      }}
+                    />
+                    <span style={{ fontWeight: 500 }}>{song.title}</span>
+                  </span>
+                  <span>{song.album}</span>
+                  <span>{song.dateAdded}</span>
+                  <span>{song.duration}</span>
+                </div>
+              ))
           )}
         </section>
         </div>

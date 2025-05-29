@@ -98,9 +98,31 @@ body {
 .song-row {
   display: grid;
   grid-template-columns: 0.5fr 2fr 1.5fr 2fr 0.5fr;
+  align-items: center;
   padding: 0.5rem 1rem;
   font-size: 1rem;
+  gap: 16px;
   color: #333;
+}
+
+.song-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.album-art {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.title-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 @media (max-width: 1150px) {
