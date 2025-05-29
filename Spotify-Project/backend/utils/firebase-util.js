@@ -21,7 +21,7 @@
 // }
 
 const admin = require("firebase-admin");
-const db = require('../firebase');
+const { db } = require('../firebase');
 
 // create user id based on spotify id
 const getUserId = (spotifyProfile) => {
@@ -48,7 +48,8 @@ const getUserProfile = async (spotifyProfile) => {
         displayTopSongs: true,
         spotifyId: spotifyProfile?.id,
         createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
+        updatedAt: serverTimestamp(),
+        followers: spotifyProfile?.followers || 0
       };
       
       await setDoc(userDocRef, defaultProfile);
