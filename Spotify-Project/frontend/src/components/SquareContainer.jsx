@@ -24,6 +24,7 @@ const SquareContainer = ({type, top, onUserClick}) => {
           key={index}
           artist={artist.artist}
           pfp={artist.pfp}
+          page={artist.page}
         />
       ))}
       {type==="user" && top.map((user, index) => (
