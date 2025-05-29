@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { FaChartBar, FaMusic, FaUser, FaCompactDisc, FaEnvelope, FaComments, FaArrowLeft } from 'react-icons/fa';
 import { logout } from './AuthContext'
 import './Sidebar.css';
+import logo from '../assets/logo.png'
 
 const Sidebar = () => {
   const location = useLocation();
@@ -25,7 +26,8 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="logo-container">
         <Link to="/">
-          {/* Removed img tag for TJLogo. You can add your own logo here if desired. */}
+          <img src={logo} alt='Heartify Logo' className='sidebar-logo'>
+		  </img>
         </Link>
       </div>
       <nav className="sidebar-nav">
@@ -69,6 +71,11 @@ const Sidebar = () => {
               <FaComments /> Forums
             </Link>
           </li>
+		  <li>
+			<Link to="/" classNameclassName={isActive('/') ? 'active' : ''}>
+			<FaUser /> Profile
+			</Link>
+		  </li>
           <li>
             <Link to="/" onClick={handleLogout}>
               <FaArrowLeft /> Logout
