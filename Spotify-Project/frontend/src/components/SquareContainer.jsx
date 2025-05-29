@@ -7,7 +7,7 @@ import "./SquareContainer.css";
 // Sample song data (replace or expand this as needed)
 
 
-const SquareContainer = ({type, top}) => {
+const SquareContainer = ({type, top, onUserClick}) => {
   return (
     <div className="grid-container">
       {type==="songs" && top.map((song, index) => (
@@ -30,7 +30,8 @@ const SquareContainer = ({type, top}) => {
         <User
           key={index}
           profileName={user.profileName}
-          pfp={user.pfp || "https://via.placeholder.com/100"}
+          image={user.image}
+          onClick={() => onUserClick(user.id)}
         />
       ))}
 

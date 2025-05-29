@@ -14,6 +14,7 @@ export const initiateSpotifyLogin = () => {
 }
 
 
+
 export const getInboxThreads = (userId) => {
 	// TODO: Add token for authentication if needed
 	return request.get(`/inbox/${userId}`);
@@ -32,3 +33,8 @@ export const searchUsers = (query) => {
 export const getUserProfile = (userId) => {
 	return request.get(`/users/${userId}`);
 };
+
+export const viewOtherProfs = (userId) => {
+    return request.get(`/user/${userId}`);
+}
+

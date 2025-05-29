@@ -11,6 +11,10 @@ const Discover = () => {
   const[loading, setLoading] = useState(true);
   const { accessToken } = useAuth();
   const navigate = useNavigate();
+
+  const handleUserClick = (userId) => {
+    navigate(`/profile/${userId}`);
+  };
   
 
   useEffect(() => {
@@ -64,7 +68,7 @@ const Discover = () => {
           />
         <div>
         </div>
-      <SquareContainer type="user" top={filteredUsers}/>
+      <SquareContainer type="user" top={filteredUsers} onUserClick={handleUserClick}/>
     </div>
   );
 };
