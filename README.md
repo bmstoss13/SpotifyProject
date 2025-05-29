@@ -17,16 +17,43 @@ Using React, Express, and Firebase, create a web application using the Spotify A
 
 ## Installation
 
-### Frontend
-* First place your two spotify certificates in the frontend root folder:
-      *test-spotify-site.local-key.pem
-      *test-spotify-site.local.pem
-* Then proceed to run the following commands to setup the frontend through your terminal
-`cd frontend`
-`npm install`
-`npm run dev`
+### Frontend Setup
 
-# How to Use Project
+1. **Place the Spotify certificates** in the root of the `frontend` directory:
+   - `test-spotify-site.local-key.pem`
+   - `test-spotify-site.local.pem`
+
+2. **Install dependencies and start the development server** by running the following commands in your terminal:
+
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+### Backend Setup
+1. **Refer to this [demo](https://github.com/swe-instructors-forge25/spotify-demo)** to receive your certificates, as well as set up your frontend url and backend callback url.
+3. 
+   ```bash
+   cd backend
+   npm install
+   npm start
+   ```
+4. Fill in your `.env` information in the backend folder with the following information.
+   ```
+   FIREBASE_API_KEY=,
+   FIREBASE_AUTH_DOMAIN=,
+   FIREBASE_PROJECT_ID=,
+   FIREBASE_STORAGE_BUCKET=,
+   FIREBASE_MESSAGING_SENDER_ID=,
+   FIREBASE_APP_ID=,
+   FIREBASE_MEASUREMENT_ID=,
+   SPOTIFY_CLIENT_ID=
+   SPOTIFY_CLIENT_SECRET=
+   SPOTIFY_REDIRECT_URI=
+   FRONTEND_URI=
+   ```
+
+## How to Use Project
 1. Sign in with Spotify
 * Click the “Log in with Spotify” button on the homepage.
 * Authorize the app to access your Spotify data (this allows the app to show your liked songs, top artists, etc.).
