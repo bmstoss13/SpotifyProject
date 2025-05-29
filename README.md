@@ -1,7 +1,7 @@
-# SpotifyProject
+# Heartify - Spotify Project
 
-## Details
-Using React, Express, and Firebase, create a web application using the Spotify API. The purpose of the app is to keep users engaged with Spotify by allowing them to view their top artists and songs, create a profile that other users can view, post in message boards, and message other users. Spotify wants to be the place where people go to listen to AND talk about music. Your app will accomplish this with a React frontend, Express backend, and Firebase database. This means that all API or database interactions initiated by the user should send a request from the frontend (React) to the backend (Express), where the interaction with the Spotify API or Firebase occurs.
+## Description
+Using a React frontend, Express backend, and Firebase database, we created a web application using the Spotify API. The purpose of the app is to keep users engaged with Spotify by allowing them to view their top artists and songs, create a profile that other users can view, post in message boards, and message other users. All API or database interactions initiated by the user should send a request from the frontend (React) to the backend (Express), where the interaction with the Spotify API or Firebase occurs.
 
 ## Features
 * Liked Songs Page
