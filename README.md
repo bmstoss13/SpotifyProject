@@ -14,3 +14,8 @@ Using React, Express, and Firebase, create a web application using the Spotify A
 * Discover page: displays all public users, so users can click and view others profiles and send messages
 * Inbox page that shows your chats with other users
 * Forum page that displays all of the discussion boards, which users can click on to access the posts
+
+# How to Use Project
+1. Sign in with Spotify
+* Click the “Log in with Spotify” button on the homepage.
+* Authorize the app to access your Spotify data (this allows the app to show your liked songs, top artists, etc.).
