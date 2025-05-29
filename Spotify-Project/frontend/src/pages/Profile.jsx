@@ -34,21 +34,8 @@ function Profile() {
 			return;
 		}
 
-		// getProfile()
-		//     .then((res) => {
-		//         setProfile(res.data);
-		//         isLoading(false);
-		//     })
-		//     .catch((e) => {
-		//         console.error("Error getting profile:", e);
-		//         isLoading(false);
-		//     });
-		// }, [accessToken]);
 		const loadData = async () => {
 			try {
-				// const profileRes = await getProfile();
-				// setProfile(profileRes.data);
-				// setLoading(false);
 
 				const spotifyProfileData = await getSpotifyProfile(accessToken);
 				setSpotifyProfile(spotifyProfileData);
@@ -84,8 +71,7 @@ function Profile() {
 
 	return (
 		<div className='profile-container'>
-			<Sidebar />
-			<title>User Profile</title>
+			<title>Profile</title>
 			<header className='profile-header'>
 				{(spotifyProfile?.images?.[0]?.url || profile.image) ? (
 					<img
