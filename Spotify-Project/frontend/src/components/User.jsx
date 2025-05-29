@@ -2,19 +2,11 @@ import React from "react";
 import "./User.css";
 import { CiUser } from "react-icons/ci";
 
-const User = ({ profileName, image }) => {
+const User = ({ profileName, image, onClick }) => {
   return (
-    <div className="user-card">
+    <div className="user-card" onClick={onClick} style={{ cursor: "pointer" }}>
       {image ? (
-        <img
-          src={image}
-          alt={`${profileName}'s profile`}
-          className="user-image"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.style.display = "none";
-          }}
-        />
+        <img src={image} alt={`${profileName}'s profile`} className="user-image" />
       ) : (
         <CiUser className="user-icon" />
       )}

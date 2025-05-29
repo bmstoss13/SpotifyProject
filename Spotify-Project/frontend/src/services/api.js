@@ -11,3 +11,5 @@ export const getDiscover = () => request.get('/discover')
 export const initiateSpotifyLogin = () => {
 	window.location.href = `https://test-spotify-site.local:${port}/auth/login`;
 }
+
+export const viewOtherProfs = (userId) => request.get(`/user/${userId}`);
