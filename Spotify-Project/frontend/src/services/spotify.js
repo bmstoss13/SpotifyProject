@@ -24,3 +24,17 @@ export const getSpotifyProfile = async (accessToken) => {
 		throw error;
 	}
 }
+
+// get liked songs
+export async function fetchLikedSongs(token, limit = 20, offset = 0) {
+	const response = await fetch(
+	  `https://api.spotify.com/v1/me/tracks?limit=${limit}&offset=${offset}`,
+	  {
+		headers: {
+		  Authorization: `Bearer ${token}`,
+		},
+	  }
+	);
+	if (!response.ok) throw new Error('Failed to fetch liked songs');
+	return response.json();
+  }
