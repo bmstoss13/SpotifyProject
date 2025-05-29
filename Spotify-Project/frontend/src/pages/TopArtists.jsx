@@ -7,8 +7,19 @@ import { useAuth } from "../components/AuthContext";
 
 const TopArtists = () => {
   const { getValidAccessToken } = useAuth();
-  const [time, changeTime] = useState("All-Time");
+  const [time, changeTime] = useState("long_term");
   const [artists, setArtists] = useState([]);
+  const updateDatabase = async (topArtists) => {
+    try {
+      const response = await axios.post(
+        `https://test-spotify-site.local:3000/top/update-artists/?id=${id}`,
+        {topArtists}
+      );
+      console.log("Database updated:", response.data);
+    } catch (error) {
+      console.error("Error updating database:", error);
+    }
+  }
 
   const breakResponse = (response) => {
     const temp = response.map((artist) => ({
@@ -26,7 +37,7 @@ const TopArtists = () => {
       console.log("Access Token:", accessToken);
       if (!accessToken) return console.log("❌ No access token");
       const response = await axios.get(
-        `https://test-spotify-site.local:3000/top/top-artists?access_token=${accessToken}`
+        `https://test-spotify-site.local:3000/top/top-artists?access_token=${accessToken}&time_range=${time}`
       );
       breakResponse(response.data.items);
     } catch (error) {
@@ -36,15 +47,16 @@ const TopArtists = () => {
 
   useEffect(() => {
     fetchArtists(); // runs once on mount
+    //updateDatabase(artists); // update database with initial artist
   }, []);
   
   useEffect(() => {
-    console.log("Updated artists:", artists); // track artists state updates (optional)
+    //console.log("Updated artists:", artists); // track artists state updates (optional)
   }, [artists]);
 
   useEffect(() => {
-    fetchArtists(); // runs again when time range changes
-    //console.log("Artists now: ", artists)
+    console.log(time);
+    fetchArtists();
   }, [time]);
 
   return (
