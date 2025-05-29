@@ -12,8 +12,12 @@ const port=3000;
 app.use(cors())
 app.use(express.json());
 
+// Ensure we have a session secret
+const sessionSecret = process.env.SPOTIFY_CLIENT_SECRET || 'fallback-secret-key-for-development';
+console.log('Using session secret:', sessionSecret ? 'Secret is set' : 'No secret found');
+
 app.use(session({
-  secret: process.env.SPOTIFY_CLIENT_SECRET,
+  secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
 }));
@@ -32,6 +36,12 @@ app.get('/discover', discoverRoute);
 
 const authRoute = require("./routes/auth");
 app.use('/auth', authRoute);
+
+const inboxRoute = require("./routes/inbox");
+app.use('/inbox', inboxRoute);
+
+const usersRoute = require("./routes/users");
+app.use('/users', usersRoute);
 
 app.get('/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date() });
