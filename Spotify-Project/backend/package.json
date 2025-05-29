@@ -38,6 +38,7 @@
     "faye-websocket": "^0.11.4",
     "finalhandler": "^2.1.0",
     "firebase": "^11.8.1",
+    "firebase-admin": "^13.4.0",
     "forwarded": "^0.2.0",
     "fresh": "^2.0.0",
     "function-bind": "^1.1.2",
@@ -106,7 +107,8 @@
     "yargs-parser": "^21.1.1"
   },
   "scripts": {
-    "start": "nodemon app.js",
+    "dev": "nodemon app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

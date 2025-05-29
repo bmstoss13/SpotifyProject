@@ -6,8 +6,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 const app=express();
-
-const port=3000;
+const port = 3000;
 
 app.use(cors())
 app.use(express.json());
@@ -19,15 +18,19 @@ app.use(session({
 }));
 
 const profileRoute = require("./routes/profile")
+const likedSongsRoute = require('./routes/likedSongs');
+
 
 app.use("/profile", profileRoute);
+app.use('/api/liked-songs', likedSongsRoute);
+
 
 app.get('/', (req, res) => {
     res.send("Spotify Project homepage");
 });
 
 const discoverRoute = require("./routes/discover");
-app.get('/discover', discoverRoute);
+app.use('/discover', discoverRoute);
 
 
 const authRoute = require("./routes/auth");
