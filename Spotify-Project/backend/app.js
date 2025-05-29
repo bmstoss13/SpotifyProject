@@ -8,20 +8,6 @@ require('dotenv').config();
 const app=express();
 const port = 3000;
 
-
-import React, { useEffect } from 'react';
-// ... other imports ...
-import { parseHash } from './utils/parseHash'; // create this helper as shown below
-
-function App() {
-  useEffect(() => {
-    const { access_token } = parseHash();
-    if (access_token) {
-      localStorage.setItem('spotify_access_token', access_token);
-      window.location.hash = ''; // Clean up URL
-    }
-  }, []);
-
 app.use(cors())
 app.use(express.json());
 
@@ -66,6 +52,3 @@ https.createServer(options, app).listen(port, () => {
     `HTTPS Server is running on https://test-spotify-site.local:${port}`
   );
 });
-
-
-}
