@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-const admin = require("firebase-admin");
-const db = require('../firebase');
-// GET /top-artists?access_token=...
+const { db, admin } = require('../firebase');
 
 
 
