@@ -25,3 +25,9 @@ Using React, Express, and Firebase, create a web application using the Spotify A
 `cd frontend`
 `npm install`
 `npm run dev`
+
+# How to Use Project
+1. Sign in with Spotify
+* Click the “Log in with Spotify” button on the homepage.
+* Authorize the app to access your Spotify data (this allows the app to show your liked songs, top artists, etc.).
+
