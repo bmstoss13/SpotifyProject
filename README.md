@@ -30,7 +30,7 @@ Using React, Express, and Firebase, create a web application using the Spotify A
 1. Sign in with Spotify
 * Click the “Log in with Spotify” button on the homepage.
 * Authorize the app to access your Spotify data (this allows the app to show your liked songs, top artists, etc.).
-* 2. Explore Your Stats
+2. Explore Your Stats
 * View your Liked Songs, Top Songs, and Top Artists by navigating the sidebar.
 * See details like album covers, track info, and the date you added each song.
 3. Edit Your Profile
