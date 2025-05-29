@@ -51,7 +51,6 @@ router.get("/top-artists", async (req, res) => {
         },
       }
     );
-    //console.log('🎵 Top Artists:', response.data);
     res.json(response.data);
   } catch (error) {
     console.error(
