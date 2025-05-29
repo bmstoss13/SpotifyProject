@@ -15,13 +15,27 @@ Using a React frontend, Express backend, and Firebase database, we created a web
 * Inbox page that shows your chats with other users
 * Forum page that displays all of the discussion boards, which users can click on to access the posts
 
-## Installation
 
+## How to Use Project
+=======
 ### .env
 * Place the .env file in the project's root directory, `Spotify-Project`.
-
+* Fill in the .env with the following information:
+   ```
+   FIREBASE_API_KEY=,
+   FIREBASE_AUTH_DOMAIN=,
+   FIREBASE_PROJECT_ID=,
+   FIREBASE_STORAGE_BUCKET=,
+   FIREBASE_MESSAGING_SENDER_ID=,
+   FIREBASE_APP_ID=,
+   FIREBASE_MEASUREMENT_ID=,
+   SPOTIFY_CLIENT_ID=
+   SPOTIFY_CLIENT_SECRET=
+   SPOTIFY_REDIRECT_URI=
+   FRONTEND_URI=
+   ```
 ### Frontend
-* First place your two spotify certificates in the frontend root folder:
+* First place your [two spotify certificates](https://github.com/swe-instructors-forge25/spotify-demo) in the frontend root folder:
     * test-spotify-site.local-key.pem
     * test-spotify-site.local.pem
 * Then proceed to run the following commands to setup the frontend through your terminal
@@ -39,7 +53,7 @@ Using a React frontend, Express backend, and Firebase database, we created a web
     * `npm install`
     * `npm start`
 
-# How to Use Project
+## How to Use Project
 1. Sign in with Spotify
 * Click the “Log in with Spotify” button on the homepage.
 * Authorize the app to access your Spotify data (this allows the app to show your liked songs, top artists, etc.).
