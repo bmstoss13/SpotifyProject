@@ -9,19 +9,22 @@ export default function LikedSongs() {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(async () => {
+  useEffect( () => {
     const fetchLikedSongs = async () => {
       const accessToken = await getValidAccessToken();
+      console.log(accessToken);
       if (!accessToken) {
         setLoading(false);
         return;
       }
-      fetch(`/api/liked-songs?access_token=${accessToken}`)
+      fetch(`https://test-spotify-site.local:3000/api/liked-songs?access_token=${accessToken}`)
         .then(res => {
+          console.log(res.body);
           if (!res.ok) throw new Error("Network error");
           return res.json();
         })
         .then(data => {
+          console.log(data);
           setSongs(data);
           setLoading(false);
         })
@@ -33,7 +36,12 @@ export default function LikedSongs() {
     };
     fetchLikedSongs();
   }, [getValidAccessToken]);
-   
+  
+  if (loading) { 
+    return (<p>
+      loading
+    </p>)
+  }
 
   return (
     <div className="liked-songs-wrapper">
