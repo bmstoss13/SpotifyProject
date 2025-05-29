@@ -256,6 +256,28 @@
   margin-right: 10px;
 }
 
+.send-button {
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.send-button:hover:not(:disabled) {
+  background-color: #ff4da6;
+}
+
+.send-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  color: #666666;
+}
+
 /* Placeholder for when no forum is selected */
 .no-forum-selected {
   text-align: center;
