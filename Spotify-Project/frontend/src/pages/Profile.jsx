@@ -97,32 +97,31 @@ function Profile() {
 					<CiUser className='profile-picture fallback-icon' />
 				)}
 				<div className='profile-overview'>
-
-					<h1>{profile.profileName || spotifyProfile?.display_name || "Display Name"}</h1>
-
+					<div className='name-edit'>
+						<h1>{profile.profileName || spotifyProfile?.display_name || "Display Name"}</h1>
+						<button
+							className="edit-profile-btn"
+							onClick={() => setIsModalOpen(true)}>
+							<FaRegEdit size={38} />
+						</button>
+					</div>
+				
 					<p>{profile.bio}</p>
 
 					<div className='follower-edit'>
 						<p>Followers: {spotifyProfile?.followers?.total || 0}</p>
-						<button
-							className="edit-profile-btn"
-							onClick={() => setIsModalOpen(true)}>
-							<FaRegEdit size={25} />
-						</button>
 					</div>
 				</div>
 			</header>
 			<div className='profile-body'>
 				{profile.showTopArtists && (
 				<section>
-					<h2>Top Artists</h2>
 					<TopArtists/>
 				</section>
 				)}
 
 				{profile.displayTopSongs && (
 				<section>
-					<h2>Top Songs</h2>
 					<TopSongs/>
 				</section>
 				)}
