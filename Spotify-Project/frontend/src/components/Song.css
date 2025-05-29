@@ -45,6 +45,7 @@
     display: inline-block;
     white-space: nowrap;
     animation: scroll-left 6s linear infinite;
+    font-family: system-ui, sans-serif; /* 👈 Set system font */
   }
   
   /* Apply to each repeated span of text */
@@ -74,3 +75,14 @@
     }
   }
   
+  .transparent-button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .transparent-button:focus {
+    outline: none;
+    box-shadow: none;
+  }
