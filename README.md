@@ -19,8 +19,8 @@ Using React, Express, and Firebase, create a web application using the Spotify A
 
 ### Frontend
 * First place your two spotify certificates in the frontend root folder:
-      *test-spotify-site.local-key.pem
-      *test-spotify-site.local.pem
+    * test-spotify-site.local-key.pem
+    * test-spotify-site.local.pem
 * Then proceed to run the following commands to setup the frontend through your terminal
     * `cd frontend`
     * `npm install`
@@ -28,9 +28,9 @@ Using React, Express, and Firebase, create a web application using the Spotify A
 
 ### Backend
 * Place the following files in your backend root directory:
-      *test-spotify-site.local-key.pem
-      *test-spotify-site.local.pem
-      *permissions.json
+    * test-spotify-site.local-key.pem
+    * test-spotify-site.local.pem
+    * permissions.json
 * Run the following commands to setup backend through the terminal
     * `cd backend`
     * `npm install`
