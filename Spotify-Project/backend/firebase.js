@@ -1,12 +1,11 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+const admin = require("firebase-admin");
+const serviceAccount = require("./permissions.json");
 
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
 
-import serviceAccount from "./permissions.json";
-
-
-const app = initializeApp(serviceAccount);
-const db = getFirestore(app);
-
-
-export default {db, app};
+const db = admin.firestore();
+module.exports = db;
