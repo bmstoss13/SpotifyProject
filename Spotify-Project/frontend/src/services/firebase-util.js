@@ -35,10 +35,11 @@ export const getUserProfile = async (spotifyProfile) => {
         showTopArtists: true,
         displayTopSongs: true,
         spotifyId: spotifyProfile?.id,
+        topArtists: [],
+        topTracks: [],
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       };
-      
       await setDoc(userDocRef, defaultProfile);
       return { id: userId, ...defaultProfile };
     }
