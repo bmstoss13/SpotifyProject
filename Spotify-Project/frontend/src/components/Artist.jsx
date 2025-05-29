@@ -1,7 +1,7 @@
 import React from "react";
 import "./Artist.css";
 import { CgPlayButton } from "react-icons/cg";
-const Artist = ({ artist, pfp }) => {
+const Artist = ({ artist, pfp, page }) => {
   return (
     <div className="music-card">
       <div className="music-icon">
@@ -12,9 +12,14 @@ const Artist = ({ artist, pfp }) => {
           <div className="marquee">{artist}</div>
         </div>
       </div>
-      <div className="play-icon">
+      <a
+        href={page}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="play-icon transparent-button"
+      >
         <CgPlayButton size={125} />
-      </div>
+      </a>
     </div>
   );
 };
