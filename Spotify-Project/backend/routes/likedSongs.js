@@ -3,7 +3,9 @@ const axios = require('axios');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+  console.log("here");
   const token = req.query.access_token; 
+  console.log(token);
   if (!token) return res.status(401).json({ error: 'Missing token' });
 
   try {

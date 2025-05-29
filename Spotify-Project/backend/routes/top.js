@@ -145,7 +145,7 @@ router.get("/top-songs", async (req, res) => {
       }
     );
     //console.log('🎵 Top Tracks:', response.data);
-    console.log("🎵 Top Tracks:", response.data);
+    //console.log("🎵 Top Tracks:", response.data);
     res.json(response.data);
   } catch (error) {
     console.error(
