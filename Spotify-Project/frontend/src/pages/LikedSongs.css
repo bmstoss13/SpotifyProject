@@ -128,7 +128,12 @@ margin-top: 1rem;
 .title-cell {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   min-width: 0;      
+}
+.title-cell span {
+  text-align: left;         
+  display: block;
 }
 
 @media (max-width: 1150px) {
