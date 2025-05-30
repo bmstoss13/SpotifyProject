@@ -1,5 +1,5 @@
 import React from "react";
-import "./Artist.css";
+import "./Artist.css"
 import { CgPlayButton } from "react-icons/cg";
 const Artist = ({ artist, pfp, page }) => {
   return (
@@ -18,7 +18,7 @@ const Artist = ({ artist, pfp, page }) => {
         rel="noopener noreferrer"
         className="play-icon transparent-button"
       >
-        <CgPlayButton size={125} />
+        <CgPlayButton size={100} />
       </a>
     </div>
   );
