@@ -106,7 +106,6 @@ function OtherUserProfile() {
 
                     <p>{profile.bio || "No bio provided."}</p>
                     <div className='follower-edit'>
-                        <p>Followers: {profile.followers || 0}</p>
                         {currentAuthUserId === userId && (
                             <button
                                 className="edit-profile-btn"
