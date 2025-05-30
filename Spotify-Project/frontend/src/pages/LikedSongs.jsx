@@ -5,41 +5,59 @@ import { FaHeart } from 'react-icons/fa';
 import { useAuth } from '../components/AuthContext'; 
 
 export default function LikedSongs() {
-  const { accessToken } = useAuth(); 
+  const { getValidAccessToken } = useAuth(); 
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("You");
 
-  useEffect(() => {
-    if (!accessToken) return;
-    setLoading(true); // start loading
-
-    fetch('/api/liked-songs', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
+  useEffect( () => {
+    const fetchLikedSongs = async () => {
+      const accessToken = await getValidAccessToken();
+      console.log(accessToken);
+      if (!accessToken) {
+        setLoading(false);
+        return;
       }
+       // fetch username
+      fetch(`https://api.spotify.com/v1/me`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
     })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
+      .then(res => res.json())
+      .then(profile => {
+        setUsername(profile.display_name || "User");
       })
-      .then(data => {
-        setSongs(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to load liked songs:", err);
-        setSongs([]); // or set an error state
-        setLoading(false);
-      });
-  }, [accessToken]);
+      .catch(() => setUsername("User"))
+      
+      // fetch liked songs
+      fetch(`https://test-spotify-site.local:3000/api/liked-songs?access_token=${accessToken}`)
+        .then(res => {
+          console.log(res.body);
+          if (!res.ok) throw new Error("Network error");
+          return res.json();
+        })
+        .then(data => {
+          console.log(data);
+          setSongs(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error("Failed to load liked songs:", err);
+          setSongs([]);
+          setLoading(false);
+        });
+    };
+    fetchLikedSongs();
+  }, [getValidAccessToken]);
+  
+  if (loading) {
+    return <p> Loading... </p>
+
+  }
+
 
   return (
     <div className="liked-songs-wrapper">
-      <Sidebar />
       <main className="liked-songs-main">
-      <div className="liked-songs-content">
         <section className="liked-songs-header">
         <div className="cover-icon">
             <FaHeart className="heart-icon" />
@@ -47,7 +65,7 @@ export default function LikedSongs() {
           <div className="header-text">
             <p className="playlist-label">Playlist</p>
             <h1 className="liked-songs-title">Liked Songs</h1>
-            <p className="subtitle">You • {songs.length} songs</p>
+            <p className="subtitle">{username} • {songs.length} songs</p>
           </div>
         </section>
 
@@ -62,19 +80,32 @@ export default function LikedSongs() {
           {(!songs || songs.length === 0) ? (
               <div style={{padding: "2rem", textAlign: "center"}}>Loading...</div>
             ) : (
-            songs.map((song, i) => (
-              <div key={i} className="song-row">
-                <span>{i + 1}</span>
-                <span>#{song.title}</span>
-                <span>{song.album}</span>
-                <span>{song.dateAdded}</span>
-                <span>{song.duration}</span>
-                <img src ={song.albumArt} alt="" />
-              </div>
-            ))
+              songs.map((song, i) => (
+                <div key={i} className="song-row">
+                  <span>{i + 1}</span>
+                  <span className="title-cell" style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={song.albumArt}
+                      alt=""
+                      className="album-art"
+                      style={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: 4,
+                        objectFit: "cover",
+                        marginRight: 12,
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span style={{ fontWeight: 500 }}>{song.title}</span>
+                  </span>
+                  <span>{song.album}</span>
+                  <span>{song.dateAdded}</span>
+                  <span>{song.duration}</span>
+                </div>
+              ))
           )}
         </section>
-        </div>
       </main>
     </div>
     

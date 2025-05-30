@@ -3,6 +3,7 @@ import './Inbox.css';
 import { getInboxThreads, sendMessage, searchUsers, getUserProfile } from '../services/api'; // Import API functions
 import { useAuth } from '../components/AuthContext'; // To get current user ID
 import { getSpotifyProfile } from '../services/spotify'; // To get current user profile
+import { useLocation } from 'react-router-dom';
 
 // Debounce utility
 function debounce(func, delay) {
@@ -26,6 +27,7 @@ const Inbox = () => {
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(null);
   const [userLoading, setUserLoading] = useState(false);
+  const location = useLocation();
 
   // Get access token from AuthContext
   const { accessToken } = useAuth();
@@ -192,6 +194,15 @@ const Inbox = () => {
       setLoadingSearch(false);
     }
   }, 500), [currentUserId]);
+
+  useEffect(() => {
+    if (location.state && location.state.profileName){
+      const { profileName } = location.state;
+      setSearchQuery(profileName);
+      debouncedSearch(profileName);
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state, debouncedSearch])
 
   const handleSearchChange = (e) => {
     const query = e.target.value;

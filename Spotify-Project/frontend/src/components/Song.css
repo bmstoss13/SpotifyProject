@@ -37,12 +37,12 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  width: 100%;  
+  width: 85%;  
 }
 
 
 .marquee-container {
-  width: 70%;        
+  width: 100%;        
   overflow-x: auto;    
   overflow-y: hidden; 
   white-space: nowrap; 
@@ -52,7 +52,7 @@
 
 /* WebKit scrollbar styling */
 .marquee-container::-webkit-scrollbar {
-  height: 1px;
+  height: 5px;
 }
 .marquee-container::-webkit-scrollbar-thumb {
   background: #888;

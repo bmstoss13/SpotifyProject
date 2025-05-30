@@ -5,7 +5,6 @@ import TimeFilter from "../components/TimeFilter";
 import { useAuth } from "../components/AuthContext";
 import axios from "axios";
 
-
 const TopSongs = () => {
   const { getValidAccessToken } = useAuth();
   const [time, changeTime] = useState("long_term");
@@ -94,8 +93,13 @@ const TopSongs = () => {
   return (
     <div className="left-aligned-container">
       <h1 className="top-header">Top Songs</h1>
-      <TimeFilter changeTime={changeTime} />
-      <SquareContainer type="songs" top={songs} />
+      {songs.length === 0 && <h2>Loading Your Top Songs...</h2>}
+      {songs.length !== 0 && (
+        <>
+          <TimeFilter changeTime={changeTime} />
+          <SquareContainer type={"songs"} top={songs} />
+        </>
+      )}
     </div>
   );
 };
