@@ -45,9 +45,7 @@ export default function LikedSongs() {
 
   return (
     <div className="liked-songs-wrapper">
-      <Sidebar />
       <main className="liked-songs-main">
-      <div className="liked-songs-content">
         <section className="liked-songs-header">
         <div className="cover-icon">
             <FaHeart className="heart-icon" />
@@ -96,7 +94,6 @@ export default function LikedSongs() {
               ))
           )}
         </section>
-        </div>
       </main>
     </div>
     
