@@ -121,10 +121,11 @@
 	margin-right: 1rem;
 	display: flex;
 	justify-content: space-between;
+	flex-direction: row;
 }
 
 .form-group label {
-	margin-bottom: 5px;
+	margin-top: .5rem;
 	font-weight: bold;
 }
 
@@ -133,9 +134,10 @@
 	flex: 1;
 	width: 80%;
 	margin-left: 30px;
-	padding: 0.5rem;
+	padding: 0.66rem;
 	border: 1px solid #ddd;
 	border-radius: 20px;
+	font-size: 1rem;
 }
 
 .modal-actions {
@@ -150,7 +152,7 @@
 	background-color: white;
 }
 
-.close-btn {
+.modal-close-btn {
 	border-radius: 20px;
 	background-color: white;
 }
@@ -162,6 +164,7 @@
 	display: inline-block;
 	width: 60px;
 	height: 34px;
+	font-size: 1rem;
 }
 
 .switch input {
