@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getSpotifyProfile } from "../services/spotify";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -8,6 +9,7 @@ export function AuthProvider({ children }) {
   const [accessToken, setAccessToken] = useState(localStorage.getItem("access_token"));
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refresh_token"));
   const [expiresIn, setExpiresIn] = useState(localStorage.getItem("expires_in"));
+  const [userId, setUserId] = useState(localStorage.getItem("user_id"));
 
   const navigate = useNavigate();
 
@@ -16,6 +18,17 @@ export function AuthProvider({ children }) {
     const auth = hashParams.get("access_token");
     const refresh = hashParams.get("refresh_token");
     const expires = hashParams.get("expires_in");
+
+    const fetchProfileAndStore = async (accessToken) => {
+      try {
+        const profile = await getSpotifyProfile(accessToken);
+        setUserId(profile.id);
+        localStorage.setItem("user_id", profile.id); 
+      } 
+      catch (e) {
+        console.error("Error fetching Spotify profile:", e);
+      }
+    };
 
     if (auth) {
       localStorage.setItem("access_token", auth);
@@ -27,10 +40,16 @@ export function AuthProvider({ children }) {
       setRefreshToken(refresh);
       setExpiresIn(expires);
 
+      fetchProfileAndStore(auth);
+      console.log("user id: " + userId);
+
       window.history.replaceState(null, '', window.location.pathname);
 
       // Redirect
       navigate("/profile");
+    } 
+    else if (accessToken && !userId) {
+      console.log("access token user id: " + userId); 
     }
   }, [navigate]);
 
@@ -69,7 +88,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, refreshToken, expiresIn, getValidAccessToken }}>
+    <AuthContext.Provider value={{ accessToken, refreshToken, expiresIn, userId, getValidAccessToken }}>
       {children}
     </AuthContext.Provider>
   );
@@ -79,6 +98,7 @@ export function logout() {
   localStorage.removeItem('access_token');
   localStorage.removeItem('refresh_token');
   localStorage.removeItem('expires_in');
+  localStorage.removeItem("user_id");
 }
 
 export function useAuth() {
