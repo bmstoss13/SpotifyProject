@@ -17,11 +17,22 @@ body, #root {
 .search-bar{
     display: flex;
     width: 100%;
-    max-width: 900px;
+    max-width: 908px;
     padding: 0.5rem 1rem;
     font-size: 1rem;
+    font-family: system-ui, -apple-system, sans-serif;
     margin-bottom: 1rem;
     border-radius: 12px;
-    border: 1px solid #ccc;
-    background-color: #d9d9d9;
+    border: 1px solid #d3d3d3;
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: text;
+}
+
+.search-bar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(145deg, #f8f8f8, #ffffff);
 }
