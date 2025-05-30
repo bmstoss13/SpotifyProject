@@ -6,7 +6,7 @@ const fs = require('fs');
 require('dotenv').config();
 const db = require('./firebase');
 
-const app=express();
+const app = express();
 const port = 3000;
 
 app.use(cors())

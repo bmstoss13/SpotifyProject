@@ -9,7 +9,7 @@ const Discover = () => {
   const[users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const[loading, setLoading] = useState(true);
-  const { accessToken } = useAuth();
+  const { accessToken, userId: currentUserId } = useAuth();
   const navigate = useNavigate();
 
   const handleUserClick = (userId) => {
@@ -22,20 +22,27 @@ const Discover = () => {
       navigate("/"); // redirect back to login if not authenticated (w access token)
       return;
     }
-    console.log("Discover access:" + accessToken)
-    const fetchData = async () => {
-      try {
-        const res = await getDiscover();
-        if (Array.isArray(res.data)) {
-          setUsers(res.data);
-        } else if (res.data && Array.isArray(res.data.users)) {
-          setUsers(res.data.users);
-        } else {
-          console.error("Unexpected format:", res.data);
-          setUsers([]);
-        }
-      } 
-      catch (e) {
+      const fetchData = async () => {
+        try {
+          const res = await getDiscover(); // Fetch all public users (including current)
+          let fetchedUsers = [];
+
+          if (Array.isArray(res.data)) {
+            fetchedUsers = res.data;
+          } 
+          else if (res.data && Array.isArray(res.data.users)) {
+            fetchedUsers = res.data.users;
+          } 
+          else {
+            console.error("Unexpected format:", res.data);
+          }
+
+            // Filter out the current user's profile on the frontend
+
+          const filteredList = fetchedUsers.filter(user => String(user.id) !== String(currentUserId)); // <--- FRONTEND FILTERING HERE
+          setUsers(filteredList);
+        } 
+        catch (e) {
         console.error("Fetch error:", e);
         setUsers([]);
       } 
