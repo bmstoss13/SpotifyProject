@@ -22,7 +22,7 @@ function LoginPage() {
 		<div className='login-page full-screen'>
 			<div className='login-container'>
 				<h1 className='welcome-text'>Welcome to Heartify</h1>
-				<button onClick={handleLogin}>Login with Spotify</button>
+				<button className='login-btn' onClick={handleLogin}>Login with Spotify</button>
 			</div>
 		</div>
 	);
