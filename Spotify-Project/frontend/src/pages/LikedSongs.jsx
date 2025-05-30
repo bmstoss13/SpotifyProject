@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar';
 import './LikedSongs.css';
 import { FaHeart } from 'react-icons/fa';
 import { useAuth } from '../components/AuthContext'; 
+import { Spinner, Center, Text } from "@chakra-ui/react";
 
 export default function LikedSongs() {
   const { getValidAccessToken } = useAuth(); 
@@ -37,11 +38,24 @@ export default function LikedSongs() {
     fetchLikedSongs();
   }, [getValidAccessToken]);
   
-  if (loading) { 
-    return (<p>
-      loading
-    </p>)
+  if (loading) {
+    return (
+      <Center minH="60vh">
+        <Spinner
+          thickness="5px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="pink.400"
+          size="xl"
+          mr={4} 
+        />
+        <Text fontSize="xl" color="pink.500">
+          Loading your liked songs…
+        </Text>
+      </Center>
+    );
   }
+
 
   return (
     <div className="liked-songs-wrapper">
