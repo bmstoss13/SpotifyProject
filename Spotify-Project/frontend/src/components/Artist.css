@@ -1,91 +1,107 @@
-/* Song.css */
+/* Artist.css */
 
 /* The outer card */
-.music-card {
-  width: 150px;
-  height: 150px;
-  background-color: 
-#d9d9d9;
-  border-radius: 30px;
+.artist-card {
+  width: 180px;
+  height: 200px;
+  background: linear-gradient(145deg, #ffffff, #f5f5f5);
+  border-radius: 20px;
   padding: 20px;
-  font-family: serif;
+  font-family: system-ui, -apple-system, sans-serif;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-
-/* Profile / album art */
-.artist-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #ccc;
-}
-
-/* Center the image */
-.music-icon {
-  display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-
-.song-info {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 85%;  
-}
-
-
-.marquee-container {
-  width: 100%;        
-  overflow-x: auto;    
-  overflow-y: hidden; 
-  white-space: nowrap; 
-  text-align: left;    
-  scrollbar-width: auto; 
-}
-
-/* WebKit scrollbar styling */
-.marquee-container::-webkit-scrollbar {
-  height: 5px;
-}
-.marquee-container::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-}
-
-
-.marquee {
-  display: inline-block;
-  white-space: nowrap;           
-  font-family: system-ui, sans-serif;
-  font-size: 14px;
-  color: black;
-}
-
-/* The play-link/icon position */
-.play-icon {
-  position: absolute;
-  bottom: -30px;
-  right: -30px;
-  color: 
-#1a1b2b;
+  gap: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
+.artist-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, #f8f8f8, #ffffff);
+}
+
+/* Profile / album art */
+.artist-card .artist-image {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.artist-card:hover .artist-image {
+  transform: scale(1.05);
+  border-color: #F6AAC4;
+}
+
+/* Center the image */
+.artist-card .music-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.artist-card .song-info {
+  width: 100%;
+  text-align: center;
+}
+
+.artist-card .artist-name {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  padding: 4px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The play-link/icon position */
+.artist-card .play-icon {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  color: #F6AAC4;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  padding: 18px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.artist-card:hover .play-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
 /* Reset for transparent button */
-.transparent-button {
+.artist-card .transparent-button {
   background-color: transparent;
   border: none;
   outline: none;
   box-shadow: none;
 }
-.transparent-button:focus {
+
+.artist-card .transparent-button:focus {
   outline: none;
   box-shadow: none;
 }

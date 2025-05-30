@@ -1,52 +1,73 @@
 .user-card {
-    width: 150px;
-    height: 150px;
-    background-color: #d9d9d9;
-    border-radius: 30px;
+    width: 180px;
+    height: 240px;
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+    border-radius: 20px;
     padding: 20px;
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: system-ui, -apple-system, sans-serif;
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .user-card:hover {
-    transform: scale(1.05);
-    background-color: #e1e1e1;
-    transition: all 0.2s ease;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(145deg, #f8f8f8, #ffffff);
 }
 
 .user-card:active {
-    transform: scale(1.00);
-    background-color: pink;
-    transition: all 0.2s ease;
+    transform: translateY(-3px);
+    transition: all 0.1s ease;
 }
 
 .user-image {
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     object-fit: cover;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    background: pink;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    background: #F6AAC4;
 }
+
+.user-card:hover .user-image {
+    transform: scale(1.05);
+    border-color: #F6AAC4;
+}
+
 .user-icon {
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    background: pink;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    background: #F6AAC4;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.user-card:hover .user-icon {
+    transform: scale(1.05);
+    border-color: #F6AAC4;
 }
 
 .user-name {
-    margin-top: 10px;
-    font-size: 1rem;
-    font-weight: 600;
+    width: 100%;
     text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    padding: 4px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
