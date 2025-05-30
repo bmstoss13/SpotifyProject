@@ -9,6 +9,7 @@ export default function LikedSongs() {
   const { getValidAccessToken } = useAuth(); 
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("You");
 
   useEffect( () => {
     const fetchLikedSongs = async () => {
@@ -18,6 +19,17 @@ export default function LikedSongs() {
         setLoading(false);
         return;
       }
+       // fetch username
+      fetch(`https://api.spotify.com/v1/me`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    })
+      .then(res => res.json())
+      .then(profile => {
+        setUsername(profile.display_name || "User");
+      })
+      .catch(() => setUsername("User"))
+      
+      // fetch liked songs
       fetch(`https://test-spotify-site.local:3000/api/liked-songs?access_token=${accessToken}`)
         .then(res => {
           console.log(res.body);
@@ -67,7 +79,7 @@ export default function LikedSongs() {
           <div className="header-text">
             <p className="playlist-label">Playlist</p>
             <h1 className="liked-songs-title">Liked Songs</h1>
-            <p className="subtitle">You • {songs.length} songs</p>
+            <p className="subtitle">{username} • {songs.length} songs</p>
           </div>
         </section>
 
