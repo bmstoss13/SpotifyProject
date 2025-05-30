@@ -8,6 +8,7 @@ import { useAuth } from "../components/AuthContext";
 const TopArtists = () => {
   const { getValidAccessToken } = useAuth();
   const [time, changeTime] = useState("long_term");
+  const [loading, setLoading] = useState(true);
   const [artists, setArtists] = useState([]);
   const [id, setId] = useState("");
   const fetchSpotifyUserId = async () => {
@@ -81,8 +82,13 @@ const TopArtists = () => {
   return (
     <div className="left-aligned-container">
       <h1 className="top-header">Top Artists</h1>
-      <TimeFilter changeTime={changeTime} />
-      <SquareContainer type={"artists"} top={artists} />
+      {artists.length===0 && <h2>Loading Your Top Artists...</h2>}
+      {artists.length!==0 && (
+        <>
+          <TimeFilter changeTime={changeTime} />
+          <SquareContainer type={"artists"} top={artists} />
+        </>
+      )}
     </div>
   );
 };
