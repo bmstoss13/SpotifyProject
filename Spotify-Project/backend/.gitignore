@@ -2,5 +2,6 @@ test-spotify-site.local-key.pem
 test-spotify-site.local.pem
 
 permissions.json
-
+.env
 node_modules
+package-lock.json
