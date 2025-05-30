@@ -9,6 +9,18 @@ export default function LikedSongs() {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("You");
+  const [sortDesc, setSortDesc] = useState(true);
+
+  const handleSortByDate = () => {
+    setSortDesc(prev => !prev);
+    setSongs(prevSongs => 
+      [...prevSongs].sort((a, b) => {
+        const dateA = new Date(a.dateAdded);
+        const dateB = new Date(b.dateAdded);
+        return sortDesc ? dateB - dateA : dateA - dateB;
+      })
+    );
+  };
 
   useEffect( () => {
     const fetchLikedSongs = async () => {
@@ -74,7 +86,12 @@ export default function LikedSongs() {
             <span>#</span>
             <span>Title</span>
             <span>Album</span>
-            <span>Date added</span>
+            <span
+                style={{ cursor: "pointer", fontWeight: "bold" }}
+                onClick={handleSortByDate}
+              >
+                Date added {sortDesc ? "▼" : "▲"}
+              </span>
             <span>🕒</span>
           </div>
           {(!songs || songs.length === 0) ? (
