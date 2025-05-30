@@ -90,7 +90,7 @@ export default function LikedSongs() {
                 style={{ cursor: "pointer", fontWeight: "bold" }}
                 onClick={handleSortByDate}
               >
-                Date added {sortDesc ? "▼" : "▲"}
+                Date added {sortDesc ? "▲" : "▼"}
               </span>
             <span>🕒</span>
           </div>
