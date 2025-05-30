@@ -8,12 +8,10 @@ import { ChakraProvider, defaultSystem } from "@chakra-ui/react"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ChakraProvider value={defaultSystem}>
     <BrowserRouter>
       <AuthProvider>
         <App />
       </AuthProvider>
     </BrowserRouter>
-    </ChakraProvider>
   </React.StrictMode>
 );
