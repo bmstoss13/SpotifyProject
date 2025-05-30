@@ -4,10 +4,12 @@ import ProfileEditModal from '../components/ProfileEditModal';
 import { CiUser } from "react-icons/ci";
 import SquareContainer from '../components/SquareContainer'; 
 import { FaRegEdit } from "react-icons/fa";
+import { BsChatDots } from "react-icons/bs";
 import { useAuth } from '../components/AuthContext';
 import { useNavigate, useParams } from "react-router-dom";
 import '../components/Profile.css';
 import { viewOtherProfs } from '../services/api';
+import './Top.css';
 
 function OtherUserProfile() {
     const [profile, setProfile] = useState(null);
@@ -58,6 +60,11 @@ function OtherUserProfile() {
         loadData();
     }, [userId, accessToken, navigate]);
 
+    const handleMessageClick = () => {
+        navigate(`/inbox`, { state: { profileName: profile.profileName }});
+
+    };
+
 
     if (loading) {
         console.log("Rendering: Loading profile...");
@@ -85,7 +92,18 @@ function OtherUserProfile() {
                     <CiUser className='profile-picture fallback-icon' />
                 )}
                 <div className='profile-overview'>
-                    <h1>{profile.profileName || "Display Name"}</h1>
+                    <div className='name-edit'>
+                        <h1>{profile.profileName || "Display Name"}</h1>
+                        {currentAuthUserId !== userId && (
+                            <button
+                                className="edit-profile-btn"
+                                onClick={handleMessageClick}
+                            >
+                                <BsChatDots size={38} />
+                            </button>
+                        )}
+                    </div>
+
                     <p>{profile.bio || "No bio provided."}</p>
                     <div className='follower-edit'>
                         <p>Followers: {profile.followers || 0}</p>
@@ -96,6 +114,7 @@ function OtherUserProfile() {
                                 <FaRegEdit size={25} />
                             </button>
                         )}
+
                     </div>
                 </div>
             </header>
@@ -103,7 +122,7 @@ function OtherUserProfile() {
 
                 {profile.showTopArtists && (
                     <section>
-                        <h2>Top Artists</h2>
+                        <h1 className='top-header'>Top Artists</h1>
                         {profile.topArtists && Array.isArray(profile.topArtists) && profile.topArtists.length > 0 ? (
                             <SquareContainer type={"artists"} top={profile.topArtists} />
                         ) : (
@@ -114,7 +133,7 @@ function OtherUserProfile() {
 
                 {profile.displayTopSongs && (
                     <section>
-                        <h2>Top Songs</h2>
+                        <h1 className='top-header'>Top Songs</h1>
                         {profile.topTracks && Array.isArray(profile.topTracks) && profile.topTracks.length > 0 ? (
                             <SquareContainer type={"songs"} top={profile.topTracks} />
                         ) : (
