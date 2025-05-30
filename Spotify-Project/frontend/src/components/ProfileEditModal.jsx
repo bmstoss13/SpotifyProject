@@ -85,7 +85,7 @@ const ProfileEditModal = ({ profileData, onClose, onSubmit }) => {
 					</div>
 					<div className="modal-actions">
 						<button className='save-btn' type="submit">Save</button>
-						<button className="close-btn" type="button" onClick={onClose}>Close</button>
+						<button className="modal-close-btn" type="close" onClick={onClose}>Close</button>
 					</div>
 				</form>
 			</div>
