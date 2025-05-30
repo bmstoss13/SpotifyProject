@@ -17,7 +17,7 @@ body, #root {
 .search-bar{
     display: flex;
     width: 100%;
-    max-width: 786px;
+    max-width: 900px;
     padding: 0.5rem 1rem;
     font-size: 1rem;
     margin-bottom: 1rem;

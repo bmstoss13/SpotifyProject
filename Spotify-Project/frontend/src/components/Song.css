@@ -2,26 +2,42 @@
 
 /* The outer card */
 .music-card {
-  width: 150px;
-  height: 150px;
-  background-color: 
-#d9d9d9;
-  border-radius: 30px;
+  width: 180px;
+  height: 240px;
+  background: linear-gradient(145deg, #ffffff, #f5f5f5);
+  border-radius: 20px;
   padding: 20px;
-  font-family: serif;
+  font-family: system-ui, -apple-system, sans-serif;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.music-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, #f8f8f8, #ffffff);
 }
 
 /* Profile / album art */
 .artist-image {
-  width: 100px;
-  height: 100px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #ccc;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.music-card:hover .artist-image {
+  transform: scale(1.05);
+  border-color: #F6AAC4;
 }
 
 /* Center the image */
@@ -29,53 +45,109 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
-
 
 .song-info {
-  margin-top: auto;
+  width: 100%;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  width: 85%;  
+  gap: 8px;
 }
-
 
 .marquee-container {
-  width: 100%;        
-  overflow-x: auto;    
-  overflow-y: hidden; 
-  white-space: nowrap; 
-  text-align: left;    
-  scrollbar-width: auto; 
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  position: relative;
+  height: 36px; /* Fixed height to prevent layout shifts */
 }
-
-/* WebKit scrollbar styling */
-.marquee-container::-webkit-scrollbar {
-  height: 5px;
-}
-.marquee-container::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-}
-
 
 .marquee {
   display: inline-block;
-  white-space: nowrap;           
-  font-family: system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  padding: 4px 0;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: transform 0.3s ease;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+.marquee-container:last-child .marquee {
   font-size: 14px;
-  color: black;
+  font-weight: 500;
+  color: #666;
+}
+
+.marquee-container:last-child {
+  height: 28px; /* Increased height for artist text to prevent cutoff */
+}
+
+/* Marquee animation for long text on hover */
+.music-card:hover .marquee {
+  animation: none;
+}
+
+.music-card:hover .marquee-container:hover .marquee {
+  animation: scroll-text 4s linear infinite;
+  text-overflow: unset;
+  white-space: nowrap;
+  overflow: visible;
+  width: auto;
+  max-width: none;
+  left: 0;
+  transform: none;
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% + 170px));
+  }
+}
+
+/* Only animate if text is longer than container */
+.marquee-container .marquee[data-overflow="true"]:hover {
+  animation: scroll-text 4s linear infinite;
 }
 
 /* The play-link/icon position */
 .play-icon {
   position: absolute;
-  bottom: -30px;
-  right: -30px;
-  color: 
-#1a1b2b;
+  top: 90px;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  color: #F6AAC4;
   cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  padding: 18px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.music-card:hover .play-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /* Reset for transparent button */
@@ -85,6 +157,7 @@
   outline: none;
   box-shadow: none;
 }
+
 .transparent-button:focus {
   outline: none;
   box-shadow: none;
