@@ -73,7 +73,7 @@ export default function LikedSongs() {
               songs.map((song, i) => (
                 <div key={i} className="song-row">
                   <span>{i + 1}</span>
-                  <span className="title-cell">
+                  <span className="title-cell" style={{ display: "flex", alignItems: "center" }}>
                     <img
                       src={song.albumArt}
                       alt=""
@@ -84,6 +84,7 @@ export default function LikedSongs() {
                         borderRadius: 4,
                         objectFit: "cover",
                         marginRight: 12,
+                        flexShrink: 0,
                       }}
                     />
                     <span style={{ fontWeight: 500 }}>{song.title}</span>
