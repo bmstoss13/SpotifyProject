@@ -1,2 +1,6 @@
-Spotify-Project/backend/test-spotify-site.local-key.pem
-Spotify-Project/backend/test-spotify-site.local-cert.pem
+test-spotify-site.local-key.pem
+test-spotify-site.local.pem
+
+permissions.json
+
+node_modules

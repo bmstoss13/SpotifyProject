@@ -23,7 +23,6 @@ export function AuthProvider({ children }) {
       localStorage.setItem("expires_in", expires);
       localStorage.setItem("token_timestamp", Date.now().toString());
 
-
       setAccessToken(auth);
       setRefreshToken(refresh);
       setExpiresIn(expires);
@@ -34,7 +33,6 @@ export function AuthProvider({ children }) {
       navigate("/profile");
     }
   }, [navigate]);
-
 
   // Utility to check token expiration
   const isTokenExpired = () => {
@@ -69,8 +67,6 @@ export function AuthProvider({ children }) {
       return null;
     }
   };
-
-
 
   return (
     <AuthContext.Provider value={{ accessToken, refreshToken, expiresIn, getValidAccessToken }}>

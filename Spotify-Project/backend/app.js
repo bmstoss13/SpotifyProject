@@ -54,6 +54,8 @@ app.use('/inbox', inboxRoute);
 const usersRoute = require("./routes/users");
 app.use('/users', usersRoute);
 
+const forumsRoute = require("./routes/forums");
+app.use('/forums', forumsRoute);
 
 app.get('/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date() });
