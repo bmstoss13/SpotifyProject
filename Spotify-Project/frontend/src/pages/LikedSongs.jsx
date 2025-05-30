@@ -114,7 +114,16 @@ export default function LikedSongs() {
                         flexShrink: 0,
                       }}
                     />
-                    <span style={{ fontWeight: 500 }}>{song.title}</span>
+                     <span style={{ fontWeight: 500 }}>
+                        <a
+                          href={song.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{textDecoration: "underline"}}
+                        >
+                          {song.title}
+                        </a>
+                      </span>
                   </span>
                   <span>{song.album}</span>
                   <span>{song.dateAdded}</span>
